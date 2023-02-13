@@ -67,9 +67,9 @@ for event_idx in range(len(elec_pt)):
 
 ## jets
     for i in range(len(jet_pt[event_idx])):
-        if jet_pt[event_idx][i] >= 30:
+        if jet_pt[event_idx][i] < 30:
             continue
-        if abs(jet_eta[event_idx][i])<=2.4:
+        if abs(jet_eta[event_idx][i])>2.4 or (1.4442<abs(jet_eta[event_idx][i])<1.5660):
             continue
         j_idx.append(i)
 
@@ -111,9 +111,11 @@ for event_idx in range(len(elec_pt)):
     mu_eta.append(muon_eta[event_idx][mu_index])
     mu_phi.append(muon_phi[event_idx][mu_index])
     mu_charge.append(muon_charge[event_idx][mu_index])
-#print(counter)
-plt.hist(mu_pt, bins=100)
-plt.show()
+
+    j_pt.append()
+print(counter)
+#plt.hist(mu_eta, bins=100)
+#plt.show()
 
 #print(e_charge[0])
 #print(mu_charge[0])
