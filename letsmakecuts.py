@@ -1,4 +1,4 @@
-import
+
 import uproot
 import numpy as np
 from   array import array
@@ -19,6 +19,10 @@ muon_mass = fileptr['Delphes_Ntuples']['muon_mass'].array()
 muon_charge = fileptr['Delphes_Ntuples']['muon_charge'].array()
 muon_reliso = fileptr['Delphes_Ntuples']['muon_reliso'].array()
 
+jet_pt = fileptr['Delphes_Ntuples']['jet_pt'].array()
+jet_eta = fileptr['Delphes_Ntuples']['jet_eta'].array()
+jet_btag = fileptr['Delphes_Ntuples']['jet_btag'].array()
+
 e_pt = []
 e_eta = []
 e_phi = []
@@ -29,29 +33,54 @@ mu_eta = []
 mu_phi = []
 mu_charge = []
 
+j_pt = []
+j_eta = []
+j_btag= []
+
 for event_idx in range(len(elec_pt)):
     e_idx = []
     mu_idx = []
+    j_idx= []
 
     ef_idx = []
     muf_idx = []
-
+    jf_idx=[]
+## electrons
     for i in range(len(elec_pt[event_idx])):
-        if elec_pt[event_idx][i] < 20:
+        if elec_pt[event_idx][i] >= 20:
             continue
-        if abs(elec_eta[event_idx][i])>2.4 or (1.4442<abs(elec_eta[event_idx][i])<1.5660):
+        if abs(elec_eta[event_idx][i])<=2.4:
             continue
         e_idx.append(i)
-
+## muons
     for i in range(len(muon_pt[event_idx])):
-        if muon_pt[event_idx][i] < 20:
+        if muon_pt[event_idx][i] >= 20:
             continue
-        if abs(muon_eta[event_idx][i])>2.4:
+        if abs(muon_eta[event_idx][i])<=2.4:
+            continue
+        if muon_reliso[event_idx][i] <= 0.15:
             continue
         mu_idx.append(i)
 
+## jets
+    for i in range(len(jet_pt[event_idx])):
+        if jet_pt[event_idx][i] >= 30:
+            continue
+        if abs(jet_eta[event_idx][i])<=2.4:
+            continue
+        j_idx.append(i)
+
     if (len(e_idx) == 0 or len(mu_idx) == 0):
         continue
+
+## events with atleast 1 jet that has btag
+    counter = 0
+    for i in range(len(jet_btag[event_idx])):
+        if jet_btag[event_idx][i] > 0:
+            counter += 1
+        if jet_btag[event_idx][i] == 0:
+            continue
+    print(counter)
 
     for i in range(len(e_idx)):
         for j in range(len(mu_idx)):
@@ -80,8 +109,8 @@ for event_idx in range(len(elec_pt)):
     mu_phi.append(muon_phi[event_idx][mu_index])
     mu_charge.append(muon_charge[event_idx][mu_index])
 
-print(e_charge[0])
-print(mu_charge[0])
+#print(e_charge[0])
+#print(mu_charge[0])
 
 
 
