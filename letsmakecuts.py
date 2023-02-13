@@ -2,6 +2,7 @@
 import uproot
 import numpy as np
 from   array import array
+import matplotlib.pyplot as plt
 
 fileptr = uproot.open("TT_Dilept_13.root")
 
@@ -36,6 +37,7 @@ mu_charge = []
 j_pt = []
 j_eta = []
 j_btag= []
+counter =0
 
 for event_idx in range(len(elec_pt)):
     e_idx = []
@@ -47,18 +49,19 @@ for event_idx in range(len(elec_pt)):
     jf_idx=[]
 ## electrons
     for i in range(len(elec_pt[event_idx])):
-        if elec_pt[event_idx][i] >= 20:
+        if elec_pt[event_idx][i] < 20:
             continue
-        if abs(elec_eta[event_idx][i])<=2.4:
+        if abs(elec_eta[event_idx][i])>2.4 or (1.4442<abs(elec_eta[event_idx][i])<1.5660):
             continue
         e_idx.append(i)
+
 ## muons
     for i in range(len(muon_pt[event_idx])):
-        if muon_pt[event_idx][i] >= 20:
+        if muon_pt[event_idx][i] < 20:
             continue
-        if abs(muon_eta[event_idx][i])<=2.4:
+        if abs(muon_eta[event_idx][i])>2.4:
             continue
-        if muon_reliso[event_idx][i] <= 0.15:
+        if muon_reliso[event_idx][i] > 0.15:
             continue
         mu_idx.append(i)
 
@@ -74,13 +77,13 @@ for event_idx in range(len(elec_pt)):
         continue
 
 ## events with atleast 1 jet that has btag
-    counter = 0
+
     for i in range(len(jet_btag[event_idx])):
         if jet_btag[event_idx][i] > 0:
             counter += 1
         if jet_btag[event_idx][i] == 0:
             continue
-    print(counter)
+
 
     for i in range(len(e_idx)):
         for j in range(len(mu_idx)):
@@ -108,6 +111,9 @@ for event_idx in range(len(elec_pt)):
     mu_eta.append(muon_eta[event_idx][mu_index])
     mu_phi.append(muon_phi[event_idx][mu_index])
     mu_charge.append(muon_charge[event_idx][mu_index])
+#print(counter)
+plt.hist(mu_pt, bins=100)
+plt.show()
 
 #print(e_charge[0])
 #print(mu_charge[0])
