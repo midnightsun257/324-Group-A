@@ -3,7 +3,11 @@ import uproot
 import numpy as np
 from   array import array
 import matplotlib.pyplot as plt
+import argparse
 
+parser = argparse.ArgumentParser()
+parser.add_argument('-i', '--input', help='Input')
+args = parser.parse_args()
 def deltaphi(e_phi, m_phi):
     d_phi = e_phi - m_phi
     if (d_phi > np.pi):
@@ -20,7 +24,7 @@ def dR(e_phi, e_eta, m_phi, m_eta):
 
 
 
-fileptr = uproot.open("TT_Dilept_13.root")
+fileptr = uproot.open(args.input)
 
 elec_pt = fileptr['Delphes_Ntuples']['elec_pt'].array()
 elec_eta = fileptr['Delphes_Ntuples']['elec_eta'].array()
