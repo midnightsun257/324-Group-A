@@ -4,6 +4,22 @@ import numpy as np
 from   array import array
 import matplotlib.pyplot as plt
 
+def deltaphi(e_phi, m_phi):
+    d_phi = e_phi - m_phi
+    if (d_phi > np.pi):
+        d_phi -= 2*np.pi
+    if (d_phi < -np.pi):
+        d_phi += 2*np.pi
+    return d_phi
+
+
+def dR(e_phi, e_eta, m_phi, m_eta):
+    d_eta = abs(e_eta - m_eta)
+    d_phi = deltaphi(e_phi, m_phi)
+    return np.sqrt(d_phi**2 + d_eta**2)
+
+
+
 fileptr = uproot.open("TT_Dilept_13.root")
 
 elec_pt = fileptr['Delphes_Ntuples']['elec_pt'].array()
@@ -37,7 +53,7 @@ mu_charge = []
 j_pt = []
 j_eta = []
 j_btag= []
-counter =0
+
 
 for event_idx in range(len(elec_pt)):
     e_idx = []
@@ -66,6 +82,7 @@ for event_idx in range(len(elec_pt)):
         mu_idx.append(i)
 
 ## jets
+    counter = 0
     for i in range(len(jet_pt[event_idx])):
         if jet_pt[event_idx][i] < 30:
             continue
@@ -73,17 +90,11 @@ for event_idx in range(len(elec_pt)):
             continue
         j_idx.append(i)
 
-    if (len(e_idx) == 0 or len(mu_idx) == 0):
-        continue
-
-## events with atleast 1 jet that has btag
-
-    for i in range(len(jet_btag[event_idx])):
         if jet_btag[event_idx][i] > 0:
             counter += 1
-        if jet_btag[event_idx][i] == 0:
-            continue
-
+    ##print(j_idx) --- ok till here
+    if (len(e_idx) == 0 or len(mu_idx) == 0):
+        continue
 
     for i in range(len(e_idx)):
         for j in range(len(mu_idx)):
@@ -95,7 +106,7 @@ for event_idx in range(len(elec_pt)):
                 ef_idx.append(tmp_e_idx)
                 muf_idx.append(tmp_mu_idx)
 
-        # Ensure such a pairing exists
+    # Ensure such a pairing exists
     if (len(ef_idx) == 0 or len(muf_idx) == 0):
         continue
 
@@ -112,7 +123,6 @@ for event_idx in range(len(elec_pt)):
     mu_phi.append(muon_phi[event_idx][mu_index])
     mu_charge.append(muon_charge[event_idx][mu_index])
 
-    j_pt.append()
 print(counter)
 #plt.hist(mu_eta, bins=100)
 #plt.show()
@@ -120,19 +130,5 @@ print(counter)
 #print(e_charge[0])
 #print(mu_charge[0])
 
-
-
-'''
-outputfile = ROOT.TFile("NewRoot.root", 'recreate')
-tree = ROOT.TTree("CutTree", "CutTree")
-
-elec_pt_arr = array('f', [0.])
-
-tree.Branch("elec_pt", elec_pt_arr, "elec_pt/F")
-
-
-
-
-outputfile.Write()
-outputfile.Close()
-'''
+#if (dR(elec_phi[i][e_index],  elec_eta[i][e_index], jet_phi[i][j], jet_eta[i][j]) < 0.4):
+#   continue
