@@ -22,8 +22,6 @@ def dR(e_phi, e_eta, m_phi, m_eta):
     d_phi = deltaphi(e_phi, m_phi)
     return np.sqrt(d_phi**2 + d_eta**2)
 
-
-
 fileptr = uproot.open(args.input)
 
 elec_pt = fileptr['Delphes_Ntuples']['elec_pt'].array()
@@ -58,6 +56,15 @@ j_pt = []
 j_eta = []
 j_btag= []
 
+l_pt   = []
+l_eta  = []
+l_phi  = []
+l_mass = []
+
+sl_pt   = []
+sl_eta  = []
+sl_phi  = []
+sl_mass = []
 
 for event_idx in range(len(elec_pt)):
     e_idx = []
@@ -127,7 +134,20 @@ for event_idx in range(len(elec_pt)):
     mu_phi.append(muon_phi[event_idx][mu_index])
     mu_charge.append(muon_charge[event_idx][mu_index])
 
-print(counter)
+    #check if
+
+    if elec_pt[event_idx][e_index] > muon_pt[event_idx][mu_index] and elec_pt[event_idx][e_index] > 25:
+        l_pt.append(elec_pt[event_idx][e_index])
+        sl_pt.append(muon_pt[event_idx][mu_index])
+    if (mu_pt[event_idx][mu_index] > elec_pt[event_idx][e_index]) and (muon_pt[event_idx][mu_index]) > 25:
+        l_pt.append(muon_pt[event_idx][mu_index])
+        sl_pt.append(elec_pt[event_idx][e_index])
+    else:
+        continue
+
+    print(l_pt)
+
+#print(counter)
 #plt.hist(mu_eta, bins=100)
 #plt.show()
 
