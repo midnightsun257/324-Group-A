@@ -57,6 +57,9 @@ j_pt = []
 j_eta = []
 j_btag= []
 
+## ljet_pt, sl_jetpet, missing energy
+
+
 l_pt   = []
 l_eta  = []
 l_phi  = []
@@ -92,6 +95,16 @@ for event_idx in range(len(elec_pt)):
         if muon_reliso[event_idx][i] > 0.15:
             continue
         mu_idx.append(i)
+        
+    for i in range(len(e_idx)):
+        for j in range(len(mu_idx)):
+
+            tmp_e_idx = e_idx[i]
+            tmp_mu_idx = mu_idx[j]
+
+            if (elec_charge[event_idx][tmp_e_idx] * muon_charge[event_idx][tmp_mu_idx] == -1):
+                ef_idx.append(tmp_e_idx)
+                muf_idx.append(tmp_mu_idx)
 
 ## jets
     counter = 0
@@ -108,20 +121,28 @@ for event_idx in range(len(elec_pt)):
     if (len(e_idx) == 0 or len(mu_idx) == 0):
         continue
 
-    for i in range(len(e_idx)):
-        for j in range(len(mu_idx)):
-
-            tmp_e_idx = e_idx[i]
-            tmp_mu_idx = mu_idx[j]
-
-            if (elec_charge[event_idx][tmp_e_idx] * muon_charge[event_idx][tmp_mu_idx] == -1):
-                ef_idx.append(tmp_e_idx)
-                muf_idx.append(tmp_mu_idx)
 
     # Ensure such a pairing exists
     if (len(ef_idx) == 0 or len(muf_idx) == 0):
         continue
 
+
+
+    #check if
+    ## add corresponding eta, phi, charge value in l and sl
+
+    if elec_pt[event_idx][e_index] > muon_pt[event_idx][mu_index] and elec_pt[event_idx][e_index] > 25:
+        l_pt.append(elec_pt[event_idx][e_index])
+        sl_pt.append(muon_pt[event_idx][mu_index])
+    if (mu_pt[event_idx][mu_index] > elec_pt[event_idx][e_index]) and (muon_pt[event_idx][mu_index]) > 25:
+        l_pt.append(muon_pt[event_idx][mu_index])
+        sl_pt.append(elec_pt[event_idx][e_index])
+    else:
+        continue
+    
+    if counter==0:
+        continue
+    
     e_index = ef_idx[0]
     mu_index = muf_idx[0]
 
@@ -134,19 +155,12 @@ for event_idx in range(len(elec_pt)):
     mu_eta.append(muon_eta[event_idx][mu_index])
     mu_phi.append(muon_phi[event_idx][mu_index])
     mu_charge.append(muon_charge[event_idx][mu_index])
-
-    #check if
-
-    if elec_pt[event_idx][e_index] > muon_pt[event_idx][mu_index] and elec_pt[event_idx][e_index] > 25:
-        l_pt.append(elec_pt[event_idx][e_index])
-        sl_pt.append(muon_pt[event_idx][mu_index])
-    if (mu_pt[event_idx][mu_index] > elec_pt[event_idx][e_index]) and (muon_pt[event_idx][mu_index]) > 25:
-        l_pt.append(muon_pt[event_idx][mu_index])
-        sl_pt.append(elec_pt[event_idx][e_index])
-    else:
-        continue
-
+    
+    
     print(l_pt)
+    
+    ## missing dR stuff
+    ## output file to save post cut arrays
 
 #print(counter)
 #plt.hist(mu_eta, bins=100)
