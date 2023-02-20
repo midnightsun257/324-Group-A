@@ -57,8 +57,16 @@ j_pt = []
 j_eta = []
 j_btag= []
 
-## ljet_pt, sl_jetpet, missing energy
+## ljet_pt, sl_jetpt --- done
+ljet_pt   = []
+ljet_eta  = []
+ljet_phi  = []
+ljet_mass = []
 
+sljet_pt   = []
+sljet_eta  = []
+sljet_phi  = []
+sljet_mass = []
 
 l_pt   = []
 l_eta  = []
@@ -105,6 +113,11 @@ for event_idx in range(len(elec_pt)):
             if (elec_charge[event_idx][tmp_e_idx] * muon_charge[event_idx][tmp_mu_idx] == -1):
                 ef_idx.append(tmp_e_idx)
                 muf_idx.append(tmp_mu_idx)
+    ##print(j_idx) --- ok till here
+    
+    # Ensure such a pairing exists
+    if (len(ef_idx) == 0 or len(muf_idx) == 0):
+        continue
 
 ## jets
     counter = 0
@@ -118,22 +131,27 @@ for event_idx in range(len(elec_pt)):
         if jet_btag[event_idx][i] > 0:
             counter += 1
     ##print(j_idx) --- ok till here
-    if (len(e_idx) == 0 or len(mu_idx) == 0):
+
+    if (dR(elec_phi[i][e_index],  elec_eta[i][e_index], jet_phi[i][j], jet_eta[i][j]) < 0.4):
         continue
+    if dR(elec_phi[event_idx][e_index], elec_eta[event_idx][e_index], jet_phi[event_idx][i], jet_eta[event_idx][i]) < 0.4 \
+            or dR(muon_phi[event_idx][mu_index], muon_eta[event_idx][mu_index], jet_phi[event_idx][i], jet_eta[event_idx][i]) < 0.4:
+                continue
 
-
-    # Ensure such a pairing exists
-    if (len(ef_idx) == 0 or len(muf_idx) == 0):
-        continue
-
-
-
-    #check if
+    #look for event with great pt and greater than 25 and append to corresponding array after cuts
     ## add corresponding eta, phi, charge value in l and sl
 
     if elec_pt[event_idx][e_index] > muon_pt[event_idx][mu_index] and elec_pt[event_idx][e_index] > 25:
         l_pt.append(elec_pt[event_idx][e_index])
         sl_pt.append(muon_pt[event_idx][mu_index])
+        l_eta.append(elec_eta[event_idx][e_index])
+        sl_eta.append(muon_eta[event_idx][mu_index])
+        l_phi.append(elec_phi[event_idx][e_index])
+        sl_phi.append(muon_phi[event_idx][mu_index])
+        l_charge.append(elec_charge[event_idx][e_index])
+        sl_charge.append(muon_charge[event_idx][mu_index])   ## charge or mass?? if charge, create arrays for l_charge and sl_charge. do the same for the other case below.
+       
+        
     if (mu_pt[event_idx][mu_index] > elec_pt[event_idx][e_index]) and (muon_pt[event_idx][mu_index]) > 25:
         l_pt.append(muon_pt[event_idx][mu_index])
         sl_pt.append(elec_pt[event_idx][e_index])
@@ -169,5 +187,3 @@ for event_idx in range(len(elec_pt)):
 #print(e_charge[0])
 #print(mu_charge[0])
 
-#if (dR(elec_phi[i][e_index],  elec_eta[i][e_index], jet_phi[i][j], jet_eta[i][j]) < 0.4):
-#   continue
