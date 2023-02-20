@@ -40,6 +40,7 @@ muon_reliso = fileptr['Delphes_Ntuples']['muon_reliso'].array()
 
 jet_pt = fileptr['Delphes_Ntuples']['jet_pt'].array()
 jet_eta = fileptr['Delphes_Ntuples']['jet_eta'].array()
+jet_phi = fileptr['Delphes_Ntuples']['jet_phi'].array()
 jet_btag = fileptr['Delphes_Ntuples']['jet_btag'].array()
 
 e_pt = []
