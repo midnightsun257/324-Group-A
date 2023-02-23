@@ -139,7 +139,7 @@ for event_idx in range(len(elec_pt)):
                 continue
 
     #look for event with great pt and greater than 25 and append to corresponding array after cuts
-    ## add corresponding eta, phi, charge value in l and sl
+    ## add corresponding eta, phi, mass value in l and sl
 
     if elec_pt[event_idx][e_index] > muon_pt[event_idx][mu_index] and elec_pt[event_idx][e_index] > 25:
         l_pt.append(elec_pt[event_idx][e_index])
@@ -148,13 +148,19 @@ for event_idx in range(len(elec_pt)):
         sl_eta.append(muon_eta[event_idx][mu_index])
         l_phi.append(elec_phi[event_idx][e_index])
         sl_phi.append(muon_phi[event_idx][mu_index])
-        l_charge.append(elec_charge[event_idx][e_index])
-        sl_charge.append(muon_charge[event_idx][mu_index])   ## charge or mass?? if charge, create arrays for l_charge and sl_charge. do the same for the other case below.
+        l_mass.append(elec_mass[event_idx][e_index])
+        sl_mass.append(muon_mass[event_idx][mu_index])    
        
         
     if (mu_pt[event_idx][mu_index] > elec_pt[event_idx][e_index]) and (muon_pt[event_idx][mu_index]) > 25:
         l_pt.append(muon_pt[event_idx][mu_index])
         sl_pt.append(elec_pt[event_idx][e_index])
+        l_eta.append(muon_eta[event_idx][mu_index])
+        sl_eta.append(elec_eta[event_idx][e_index])
+        l_phi.append(muon_phi[event_idx][mu_index])
+        sl_phi.append(elec_phi[event_idx][e_index])
+        l_mass.append(muon_mass[event_idx][mu_index])
+        sl_mass.append(elec_mass[event_idx][e_index])
     else:
         continue
     
@@ -167,17 +173,14 @@ for event_idx in range(len(elec_pt)):
     e_pt.append(elec_pt[event_idx][e_index])
     e_eta.append(elec_eta[event_idx][e_index])
     e_phi.append(elec_phi[event_idx][e_index])
-    e_charge.append(elec_charge[event_idx][e_index])
+    e_mass.append(elec_mass[event_idx][e_index])
 
     mu_pt.append(muon_pt[event_idx][mu_index])
     mu_eta.append(muon_eta[event_idx][mu_index])
     mu_phi.append(muon_phi[event_idx][mu_index])
-    mu_charge.append(muon_charge[event_idx][mu_index])
+    mu_mass.append(muon_mass[event_idx][mu_index])
     
     
-    print(l_pt)
-    
-    ## missing dR stuff
     ## output file to save post cut arrays
 
 #print(counter)
