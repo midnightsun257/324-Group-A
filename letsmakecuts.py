@@ -1,4 +1,3 @@
-
 import uproot
 import numpy as np
 from   array import array
@@ -150,7 +149,7 @@ for event_idx in range(len(elec_pt)):
         sl_phi.append(muon_phi[event_idx][mu_index])
         l_mass.append(elec_mass[event_idx][e_index])
         sl_mass.append(muon_mass[event_idx][mu_index])    
-       
+       #add charge
         
     if (mu_pt[event_idx][mu_index] > elec_pt[event_idx][e_index]) and (muon_pt[event_idx][mu_index]) > 25:
         l_pt.append(muon_pt[event_idx][mu_index])
@@ -179,6 +178,16 @@ for event_idx in range(len(elec_pt)):
     mu_eta.append(muon_eta[event_idx][mu_index])
     mu_phi.append(muon_phi[event_idx][mu_index])
     mu_mass.append(muon_mass[event_idx][mu_index])
+
+    ljet_pt.append(jet_pt[event_idx][ljet_idx])
+    ljet_phi.append(jet_phi[event_idx][ljet_idx])
+    ljet_eta.append(jet_eta[event_idx][ljet_idx])
+    ljet_mass.append(jet_mass[event_idx][ljet_idx])
+
+    sljet_pt.append(jet_pt[event_idx][sljet_idx])
+    sljet_phi.append(jet_phi[event_idx][sljet_idx])
+    sljet_eta.append(jet_eta[event_idx][sljet_idx])
+    sljet_mass.append(jet_mass[event_idx][sljet_idx])
     
     
     ## output file to save post cut arrays
@@ -190,3 +199,108 @@ for event_idx in range(len(elec_pt)):
 #print(e_charge[0])
 #print(mu_charge[0])
 
+## make histograms
+outputfile = ROOT.TFile("NewRoot.root", 'recreate')
+tree = ROOT.TTree("CutTree", "CutTree")
+# make arrays for each
+elec_pt_arr = array('f', [0.])
+elec_eta_arr = array('f', [0.])
+elec_phi_arr = array('f', [0.])
+elec_charge_arr = array('f', [0.])
+
+mu_pt_arr = array('f', [0.])
+mu_eta_arr = array('f', [0.])
+mu_phi_arr = array('f', [0.])
+mu_charge_arr = array('f', [0.])
+
+ljet_pt_arr = array('f', [0.])
+ljet_eta_arr = array('f', [0.])
+ljet_phi_arr = array('f', [0.])
+ljet_mass_arr = array('f', [0.])
+
+sljet_pt_arr = array('f', [0.])
+sljet_eta_arr = array('f', [0.])
+sljet_phi_arr = array('f', [0.])
+sljet_mass_arr = array('f', [0.])
+
+l_pt_arr = array('f', [0.])
+l_eta_arr = array('f', [0.])
+l_phi_arr = array('f', [0.])
+l_charge_arr = array('f', [0.])
+
+sl_pt_arr = array('f', [0.])
+sl_eta_arr = array('f', [0.])
+sl_phi_arr = array('f', [0.])
+sl_charge_arr = array('f', [0.])
+
+# create tree.Branch
+tree.Branch("elec_pt", elec_pt_arr, "elec_pt/F")
+tree.Branch("elec_eta", elec_eta_arr, "elec_eta/F")
+tree.Branch("elec_phi", elec_phi_arr, "elec_phi/F")
+tree.Branch("elec_charge", elec_charge_arr, "elec_charge/F")
+
+tree.Branch("mu_pt", mu_pt_arr, "mu_pt/F")
+tree.Branch("mu_eta", mu_eta_arr, "mu_eta/F")
+tree.Branch("mu_phi", mu_phi_arr, "mu_phi/F")
+tree.Branch("mu_charge", mu_charge_arr, "mu_charge/F")
+
+tree.Branch("ljet_pt", ljet_pt_arr, "ljet_pt/F")
+tree.Branch("ljet_eta", ljet_eta_arr, "ljet_eta/F")
+tree.Branch("ljet_phi", ljet_phi_arr, "ljet_phi/F")
+tree.Branch("ljet_charge", ljet_mass_arr, "ljet_charge/F")
+
+tree.Branch("sljet_pt", sljet_pt_arr, "sljet_pt/F")
+tree.Branch("sljet_eta", sljet_eta_arr, "ljet_eta/F")
+tree.Branch("sljet_phi", sljet_phi_arr, "ljet_phi/F")
+tree.Branch("sljet_mass", sljet_mass_arr, "ljet_mass/F")
+
+tree.Branch("l_pt", l_pt_arr, "l_pt/F")
+tree.Branch("l_eta", l_eta_arr, "l_eta/F")
+tree.Branch("l_phi", l_phi_arr, "l_phi/F")
+tree.Branch("l_charge", l_charge_arr, "l_charge/F")
+
+tree.Branch("sl_pt", sl_pt_arr, "sl_pt/F")
+tree.Branch("sl_eta", sl_eta_arr, "sl_eta/F")
+tree.Branch("sl_phi", sl_phi_arr, "sl_phi/F")
+tree.Branch("sl_charge", sl_charge_arr, "sl_charge/F")
+
+## tree fill for all the arrays
+
+for i in range(len(e_pt)):
+    e_pt_arr[0] = e_pt[i]
+    e_phi_arr[0] = e_phi[i]
+    e_eta_arr[0] = e_eta[i]
+    e_charge_arr[0] = e_charge[i]
+
+    mu_pt_arr[0] = mu_pt[i]
+    mu_phi_arr[0] = mu_phi[i]
+    mu_eta_arr[0] = mu_eta[i]
+    mu_charge_arr[0] = mu_charge[i]
+
+    ljet_pt_arr[0] = ljet_pt[i]
+    ljet_phi_arr[0] = ljet_phi[i]
+    ljet_eta_arr[0] = ljet_eta[i]
+    ljet_mass_arr[0] = ljet_mass[i]
+
+    sljet_pt_arr[0] = sljet_pt[i]
+    sljet_phi_arr[0] = sljet_phi[i]
+    sljet_eta_arr[0] = sljet_eta[i]
+    sljet_mass_arr[0] = sljet_mass[i]
+
+    l_pt_arr[0] = l_pt[i]
+    l_phi_arr[0] = l_phi[i]
+    l_eta_arr[0] = l_eta[i]
+    l_charge_arr[0] = l_charge[i]
+
+    sl_pt_arr[0] = sl_pt[i]
+    sl_phi_arr[0] = sl_phi[i]
+    sl_eta_arr[0] = sl_eta[i]
+    sl_charge_arr[0] = sl_charge[i]
+
+    tree.Fill()
+
+outputfile.Write()
+outputfile.Close()
+
+## top quark reconstruction
+## loook at the entanglements once we have quarks reconstructed
