@@ -148,8 +148,8 @@ for event_idx in range(len(elec_pt)):
     e_index = ef_idx[0]
     mu_index = muf_idx[0]
     
-    e4vector.SetPtEtaPhiM(elec_pt[event_idx][e_index]},elec_eta[event_idx][e_index]},elec_phi[event_idx][e_index]},elec_mass[event_idx][e_index]})
-    m4vector.SetPtEtaPhiM(elec_pt[event_idx][e_index]},elec_eta[event_idx][e_index]},elec_phi[event_idx][e_index]},elec_mass[event_idx][e_index]})                                                                                                                                
+    e4vector.SetPtEtaPhiM(elec_pt[event_idx][e_index],elec_eta[event_idx][e_index],elec_phi[event_idx][e_index],elec_mass[event_idx][e_index])
+    m4vector.SetPtEtaPhiM(elec_pt[event_idx][e_index],elec_eta[event_idx][e_index],elec_phi[event_idx][e_index],elec_mass[event_idx][e_index])                                                                                                                                
     if (e4vector+m4vector).M()<20:
         continue
     if counter==0:
