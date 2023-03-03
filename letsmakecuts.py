@@ -79,6 +79,8 @@ sl_mass = []
 
 e4vector = ROOT.TLorentzVector() 
 m4vector = ROOT.TLorentzVector()
+final_array = [0]*len(elec_pt)
+print(len(final_array))
 
 for event_idx in range(len(elec_pt)):
     e_idx = []
