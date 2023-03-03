@@ -89,6 +89,9 @@ for event_idx in range(len(elec_pt)):
     muf_idx = []
     jf_idx=[]
     
+    e4vector = ROOT.TLorentzVector() 
+    m4vector = ROOT.TLorentzVector()
+    
 ## electrons
 
     for i in range(len(elec_pt[event_idx])):
@@ -97,6 +100,7 @@ for event_idx in range(len(elec_pt)):
         if abs(elec_eta[event_idx][i])>2.4 or (1.4442<abs(elec_eta[event_idx][i])<1.5660):
             continue
         e_idx.append(i)
+        
 
 ## muons
     for i in range(len(muon_pt[event_idx])):
@@ -141,7 +145,17 @@ for event_idx in range(len(elec_pt)):
     if dR(elec_phi[event_idx][e_index], elec_eta[event_idx][e_index], jet_phi[event_idx][i], jet_eta[event_idx][i]) < 0.4 \
             or dR(muon_phi[event_idx][mu_index], muon_eta[event_idx][mu_index], jet_phi[event_idx][i], jet_eta[event_idx][i]) < 0.4:
                 continue
-
+    e_index = ef_idx[0]
+    mu_index = muf_idx[0]
+    
+    e4vector.SetPtEtaPhiM(elec_pt[event_idx][e_index]},elec_eta[event_idx][e_index]},elec_phi[event_idx][e_index]},elec_mass[event_idx][e_index]})
+    m4vector.SetPtEtaPhiM(elec_pt[event_idx][e_index]},elec_eta[event_idx][e_index]},elec_phi[event_idx][e_index]},elec_mass[event_idx][e_index]})                                                                                                                                
+    if (e4vector+m4vector).M()<20:
+        continue
+    if counter==0:
+        continue                                                                                                                                
+                                                                                                                                     
+                                                                                                                                     
     #look for event with great pt and greater than 25 and append to corresponding array after cuts
     ## add corresponding eta, phi, mass value in l and sl
 
@@ -167,16 +181,7 @@ for event_idx in range(len(elec_pt)):
         sl_mass.append(elec_mass[event_idx][e_index])
     else:
         continue
-    
-    if counter==0:
-        continue
-    
-    e_index = ef_idx[0]
-    mu_index = muf_idx[0]
-    
-    e4vector.SetPtEtaPhiM(elec_pt[event_idx][e_index},elec_eta[event_idx][e_index},elec_phi[event_idx][e_index},elec_mass[event_idx][e_index})
-    if (e4vector+mu4vector).M()<20:
-        continue                                                                                                                                 
+                                                                                                                                    
                                                                                                                                      
                                                                                                                                   
 
