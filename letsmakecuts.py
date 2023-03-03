@@ -77,6 +77,9 @@ sl_eta  = []
 sl_phi  = []
 sl_mass = []
 
+e4vector = ROOT.TLorentzVector() 
+m4vector = ROOT.TLorentzVector()
+
 for event_idx in range(len(elec_pt)):
     e_idx = []
     mu_idx = []
@@ -85,7 +88,9 @@ for event_idx in range(len(elec_pt)):
     ef_idx = []
     muf_idx = []
     jf_idx=[]
+    
 ## electrons
+
     for i in range(len(elec_pt[event_idx])):
         if elec_pt[event_idx][i] < 20:
             continue
@@ -168,6 +173,12 @@ for event_idx in range(len(elec_pt)):
     
     e_index = ef_idx[0]
     mu_index = muf_idx[0]
+    
+    e4vector.SetPtEtaPhiM(elec_pt[event_idx][e_index},elec_eta[event_idx][e_index},elec_phi[event_idx][e_index},elec_mass[event_idx][e_index})
+    if (e4vector+mu4vector).M()<20:
+        continue                                                                                                                                 
+                                                                                                                                     
+                                                                                                                                  
 
     e_pt.append(elec_pt[event_idx][e_index])
     e_eta.append(elec_eta[event_idx][e_index])
