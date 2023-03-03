@@ -42,6 +42,25 @@ jet_eta = fileptr['Delphes_Ntuples']['jet_eta'].array()
 jet_phi = fileptr['Delphes_Ntuples']['jet_phi'].array()
 jet_btag = fileptr['Delphes_Ntuples']['jet_btag'].array()
 
+met_pt = fileptr['Delphes_Ntuples']['met_pt'].array()
+met_phi = fileptr['Delphes_Ntuples']['met_phi'].array()
+
+weight = fileptr['Delphes_Ntuples']['weight'].array()
+scalar_ht = fileptr['Delphes_Ntuples']['scalar_ht'].array()
+
+genjet_pt = fileptr['Delphes_Ntuples']['genjet_pt'].array()
+genjet_eta = fileptr['Delphes_Ntuples']['genjet_eta'].array()
+genjet_phi = fileptr['Delphes_Ntuples']['genjet_phi'].array()
+genjet_mass = fileptr['Delphes_Ntuples']['genjet_mass'].array()
+
+genpart_pt = fileptr['Delphes_Ntuples']['genpart_pt'].array()
+genpart_eta = fileptr['Delphes_Ntuples']['genpart_eta'].array()
+genpart_phi = fileptr['Delphes_Ntuples']['genpart_phi'].array()
+genpart_mass = fileptr['Delphes_Ntuples']['genpart_mass'].array()
+genpart_pid = fileptr['Delphes_Ntuples']['genpart_pid'].array()
+genpart_status = fileptr['Delphes_Ntuples']['genpart_status'].array()
+genpart_charge = fileptr['Delphes_Ntuples']['genpart_charge'].array()
+
 e_pt = []
 e_eta = []
 e_phi = []
