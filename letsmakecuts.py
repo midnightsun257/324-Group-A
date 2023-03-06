@@ -239,7 +239,7 @@ for event_idx in range(len(elec_pt)):
 # print(mu_charge[0])
 
 ## make histograms
-outputfile = ROOT.TFile("args.Output", 'recreate')
+outputfile = ROOT.TFile("args.output", 'recreate')
 tree = ROOT.TTree("CutTree", "CutTree")
 # make arrays for each
 elec_pt_arr = array('f', [0.])
