@@ -6,6 +6,7 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-i', '--input', help='Input')
+parser.add_argument('-o', '--output', help='Output')
 args = parser.parse_args()
 
 
@@ -238,7 +239,7 @@ for event_idx in range(len(elec_pt)):
 # print(mu_charge[0])
 
 ## make histograms
-outputfile = ROOT.TFile("NewRoot.root", 'recreate')
+outputfile = ROOT.TFile("args.Output", 'recreate')
 tree = ROOT.TTree("CutTree", "CutTree")
 # make arrays for each
 elec_pt_arr = array('f', [0.])
