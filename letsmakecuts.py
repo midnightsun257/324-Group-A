@@ -100,15 +100,20 @@ sl_eta = []
 sl_phi = []
 sl_mass = []
 
+MET_pt= []
+MET_phi=[]
 
 total_pt = []
 total_jet_pt= []
-scalar_ht = []
+SCALAR_ht = []
 
 llbar_deta = []
 llbar_dphi = []
 bbbar_deta = []
 bbbar_dphi = []
+
+total_jet_pt = []
+total_pt = []
 
 e4vector = ROOT.TLorentzVector()
 m4vector = ROOT.TLorentzVector()
@@ -193,7 +198,8 @@ for event_idx in range(len(elec_pt)):
         continue
     if counter == 0:
         continue
-
+    
+    
         # look for event with great pt and greater than 25 and append to corresponding array after cuts
     ## add corresponding eta, phi, mass value in l and sl
 
@@ -240,8 +246,30 @@ for event_idx in range(len(elec_pt)):
     sljet_eta.append(jet_eta[event_idx][sljet_idx])
     sljet_mass.append(jet_mass[event_idx][sljet_idx])
     
-   
-
+    temp_total_pt = 0
+    temp_total_jet_pt =0
+    
+    for i in elec_pt[event_idx]:  
+        temp_total_pt += elec_pt[event_idx][i]
+        
+    for i in muon_pt[event_idx]:  
+        temp_total_pt += muon_pt[event_idx][i]
+        
+    for i in jet_pt[event_idx]:  
+        temp_total_pt += jet_pt[event_idx][i]
+        temp_total_jet_pt += jet_pt[event_idx][i]
+    
+    temp_total_pt += (met_pt[event_idx][0])
+    SCALAR_ht.append(scalar_ht[event_idx][0])
+    MET_pt.append(met_pt[event_idx][0])
+    MET_phi.append(met_phi[event_idx][0])
+    
+    total_jet_pt.append(temp_total_jet_pt)
+    total_pt.append(temp_total_pt)
+    
+    
+        
+        
     ## output file to save post cut arrays
 
 # print(counter)
