@@ -279,6 +279,27 @@ for event_idx in range(len(elec_pt)):
 # print(e_charge[0])
 # print(mu_charge[0])
 
+final_array = np.array(final_array)
+
+selected_weight = weight[final_array == 1]
+selected_jet_pt = jet_pt[final_array == 1]
+selected_jet_eta = jet_eta[final_array == 1]
+selected_jet_phi = jet_phi[final_array == 1]
+selected_jet_btag = jet_btag[final_array == 1]
+selected_genjet_eta = genjet_eta[final_array == 1]
+selected_genjet_mass = genjet_mass[final_array == 1]
+selected_genjet_pt = genjet_pt[final_array == 1]
+selected_genjet_phi = genjet_phi[final_array == 1]
+selected_genpart_pt = genpart_pt[final_array == 1]
+selected_genpart_eta = genpart_eta[final_array == 1]
+selected_genpart_phi = genpart_phi[final_array == 1]
+selected_genpart_mass = genpart_mass[final_array == 1]
+selected_genpart_pid = genpart_pid[final_array == 1]
+selected_genpart_status = genpart_status[final_array == 1]
+selected_genpart_charge = genpart_charge[final_array == 1]
+
+
+
 ## make histograms
 outputfile = ROOT.TFile(args.output, 'recreate')
 tree = ROOT.TTree("CutTree", "CutTree")
