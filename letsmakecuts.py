@@ -100,6 +100,16 @@ sl_eta = []
 sl_phi = []
 sl_mass = []
 
+
+total_pt = []
+total_jet_pt= []
+scalar_ht = []
+
+llbar_deta = []
+llbar_dphi = []
+bbbar_deta = []
+bbbar_dphi = []
+
 e4vector = ROOT.TLorentzVector()
 m4vector = ROOT.TLorentzVector()
 final_array = [0] * len(elec_pt)
@@ -113,6 +123,7 @@ for event_idx in range(len(elec_pt)):
     ef_idx = []
     muf_idx = []
     jf_idx = []
+   
 
     e4vector = ROOT.TLorentzVector()
     m4vector = ROOT.TLorentzVector()
@@ -228,6 +239,8 @@ for event_idx in range(len(elec_pt)):
     sljet_phi.append(jet_phi[event_idx][sljet_idx])
     sljet_eta.append(jet_eta[event_idx][sljet_idx])
     sljet_mass.append(jet_mass[event_idx][sljet_idx])
+    
+   
 
     ## output file to save post cut arrays
 
@@ -271,6 +284,18 @@ sl_pt_arr = array('f', [0.])
 sl_eta_arr = array('f', [0.])
 sl_phi_arr = array('f', [0.])
 sl_charge_arr = array('f', [0.])
+
+MET_pt_arr = array('f', [0.])
+MET_phi_arr = array('f', [0.])
+
+Total_pt_arr = array('f', [0.])
+Total_jet_pt_arr = array('f', [0.])
+scalar_ht_pt_arr = array('f', [0.])
+
+llbar_deta_arr = array('f', [0.])
+llbar_dphi_arr = array('f', [0.])
+bbbar_deta_arr = array('f', [0.])
+bbbar_dphi_arr = array('f', [0.])
 
 # create tree.Branch
 tree.Branch("elec_pt", elec_pt_arr, "elec_pt/F")
