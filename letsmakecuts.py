@@ -349,6 +349,26 @@ llbar_dphi_arr = array('f', [0.])
 bbbar_deta_arr = array('f', [0.])
 bbbar_dphi_arr = array('f', [0.])
 
+weight_arr = array('f', [0.])
+
+jet_pt_arr = array('f', 10000*[0.])
+jet_eta_arr = array('f', 10000*[0.])
+jet_phi_arr = array('f', 10000*[0.])
+jet_btag_arr = array('f', 10000*[0.])
+
+genjet_eta_arr = array('f', 10000*[0.])
+genjet_mass_arr = array('f', 10000*[0.])
+genjet_pt_arr = array('f', 10000*[0.])
+genjet_phi_arr = array('f', 10000*[0.])
+
+genpart_pt_arr = array('f', 10000*[0.])
+genpart_eta_arr = array('f', 10000*[0.])
+genpart_phi_arr = array('f', 10000*[0.])
+genpart_mass_arr = array('f', 10000*[0.])
+genpart_pid_arr = array('f', 10000*[0.])
+genpart_status_arr = array('f', 10000*[0.])
+genpart_charge_arr = array('f', 10000*[0.])
+
 # create tree.Branch
 tree.Branch("elec_pt", elec_pt_arr, "elec_pt/F")
 tree.Branch("elec_eta", elec_eta_arr, "elec_eta/F")
@@ -379,6 +399,24 @@ tree.Branch("sl_pt", sl_pt_arr, "sl_pt/F")
 tree.Branch("sl_eta", sl_eta_arr, "sl_eta/F")
 tree.Branch("sl_phi", sl_phi_arr, "sl_phi/F")
 tree.Branch("sl_charge", sl_charge_arr, "sl_charge/F")
+
+tree.Branch("jet_pt", jet_pt_arr, "jet_pt/F")
+tree.Branch("jet_eta", jet_eta_arr, "jet_eta/F")
+tree.Branch("jet_phi", jet_phi_arr, "jet_phi/F")
+tree.Branch("jet_btag", jet_btag_arr, "jet_btag/F")
+
+tree.Branch("genjet_eta", genjet_eta_arr, "genjet_eta/F")
+tree.Branch("genjet_mass", genjet_mass_arr, "genjet_mass/F")
+tree.Branch("genjet_pt", genjet_pt_arr, "genjet_pt/F")
+tree.Branch("genjet_phi", genjet_phi_arr, "genjet_phi/F")
+
+tree.Branch("genpart_pt", genpart_pt_arr, "genpart_pt/F")
+tree.Branch("genpart_eta", genpart_eta_arr, "genpart_eta/F")
+tree.Branch("genpart_phi", genpart_phi_arr, "genpart_phi/F")
+tree.Branch("genpart_mass", genpart_mass_arr, "genpart_mass/F")
+tree.Branch("genpart_pid", genpart_pid_arr, "genpart_pid/F")
+tree.Branch("genpart_status", genpart_status_arr, "genpart_status/F")
+tree.Branch("genpart_charge", genpart_charge_arr, "genpart_charge/F")
 
 ## tree fill for all the arrays
 
