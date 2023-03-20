@@ -1,4 +1,4 @@
-import root
+import ROOT
 import uproot
 import numpy as np
 from array import array
