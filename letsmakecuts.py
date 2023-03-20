@@ -1,3 +1,4 @@
+import root
 import uproot
 import numpy as np
 from array import array
