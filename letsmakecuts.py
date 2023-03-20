@@ -183,7 +183,7 @@ for event_idx in range(len(elec_pt)):
     if (dR(elec_phi[i][e_index], elec_eta[i][e_index], jet_phi[i][j], jet_eta[i][j]) < 0.4):
         continue
     if dR(elec_phi[event_idx][e_index], elec_eta[event_idx][e_index], jet_phi[event_idx][i],
-          jet_eta[event_idx][i]) < 0.4 \
+          jet_eta[event_idx][i]) < 0.4 
             or dR(muon_phi[event_idx][mu_index], muon_eta[event_idx][mu_index], jet_phi[event_idx][i],
                   jet_eta[event_idx][i]) < 0.4:
         continue
@@ -198,7 +198,10 @@ for event_idx in range(len(elec_pt)):
         continue
     if counter == 0:
         continue
-    
+        
+    llbar_deta= np.abs(np.abs(np.abs(np.asarray(l_eta)- np.asarray(sl_eta)) - np.pi) - np.pi)
+    llbar_dphi= np.abs(np.abs(np.abs(np.asarray(l_phi)- np.asarray(sl_phi)) - np.pi) - np.pi)
+    ## bbbar?
     
         # look for event with great pt and greater than 25 and append to corresponding array after cuts
     ## add corresponding eta, phi, mass value in l and sl
