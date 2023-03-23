@@ -50,7 +50,7 @@ for i in range(len(genpart_pt)):
     alep_idx=0
 
     for j in range(len(genpart_pt[i])-1):
-        if (genpart_pid[j]==11 or genpart_pid[j]==13 or genpart_pid[j]==15) and (genpart_pid[j+1]==-12 or genpart_pid[j+1]==-14 or genpart_pid[j+1]==-16) and tempnum_lep==0:
+        if (genpart_pid[i][j]==11 or genpart_pid[i][j]==13 or genpart_pid[i][j]==15) and (genpart_pid[i][j+1]==-12 or genpart_pid[i][j+1]==-14 or genpart_pid[i][j+1]==-16) and tempnum_lep==0:
             lep_idx=j
             tempnum_lep+=1
-            break
+            
