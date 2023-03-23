@@ -53,5 +53,5 @@ for i in range(len(genpart_pt)):
         if (genpart_pid[i][j]==11 or genpart_pid[i][j]==13 or genpart_pid[i][j]==15) and (genpart_pid[i][j+1]==-12 or genpart_pid[i][j+1]==-14 or genpart_pid[i][j+1]==-16) and tempnum_lep==0:
             lep_idx=j
             tempnum_lep+=1
-        if tempnum_lep=1 and tempnum_alep=1:
+        if tempnum_lep==1 and tempnum_alep==1:
             break
