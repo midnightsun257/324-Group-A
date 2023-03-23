@@ -40,3 +40,17 @@ gen_atop_pt=[]
 gen_atop_eta=[]
 gen_atop_phi=[]
 gen_atop_mass=[]
+
+for i in range(len(genpart_pt)):
+    tempnum_lep=0
+    tempnum_alep=0
+    tempnum_b=0
+    tempnum_ab=0
+    lep_idx=0
+    alep_idx=0
+
+    for j in range(len(genpart_pt[i])-1):
+        if (genpart_pid[j]==11 or genpart_pid[j]==13 or genpart_pid[j]==15) and (genpart_pid[j+1]==-12 or genpart_pid[j+1]==-14 or genpart_pid[j+1]==-16) and tempnum_lep==0:
+            lep_idx=j
+            tempnum_lep+=1
+            break
