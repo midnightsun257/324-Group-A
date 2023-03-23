@@ -13,13 +13,13 @@ parser.add_argument('-o', '--output', help='Output')
 args = parser.parse_args()
 
 fileptr = uproot.open(args.input)
-genpart_pt = fileptr['CutTree']['genpart_pt_arr'].array()
-genpart_eta = fileptr['CutTree']['genpart_eta_arr'].array()
-genpart_phi = fileptr['CutTree']['genpart_phi_arr'].array()
-genpart_mass = fileptr['CutTree']['genpart_mass_arr'].array()
-genpart_pid = fileptr['CutTree']['genpart_pid_arr'].array()
-genpart_status = fileptr['CutTree']['genpart_status_arr'].array()
-genpart_charge = fileptr['CutTree']['genpart_charge_arr'].array()
+genpart_pt = fileptr['CutTree']['genpart_pt'].array()
+genpart_eta = fileptr['CutTree']['genpart_eta'].array()
+genpart_phi = fileptr['CutTree']['genpart_phi'].array()
+genpart_mass = fileptr['CutTree']['genpart_mass'].array()
+genpart_pid = fileptr['CutTree']['genpart_pid'].array()
+genpart_status = fileptr['CutTree']['genpart_status'].array()
+genpart_charge = fileptr['CutTree']['genpart_charge'].array()
 
 gen_lep_pt=[]
 gen_lep_eta=[]
