@@ -173,6 +173,8 @@ for event_idx in range(len(elec_pt)):
     ## jets
     counter = 0
     for i in range(len(jet_pt[event_idx])):
+        if dR(elec_phi[event_idx][e_index], elec_eta[event_idx][e_index], jet_phi[event_idx][i], jet_eta[event_idx][i]) < 0.4 or dR(muon_phi[event_idx][mu_index], muon_eta[event_idx][mu_index], jet_phi[event_idx][i], jet_eta[event_idx][i]) < 0.4:
+            continue
         if jet_pt[event_idx][i] < 30:
             continue
         if abs(jet_eta[event_idx][i]) > 2.4 or (1.4442 < abs(jet_eta[event_idx][i]) < 1.5660):
@@ -183,10 +185,9 @@ for event_idx in range(len(elec_pt)):
             counter += 1
     ##print(j_idx) --- ok till here
 
-    if (dR(elec_phi[i][e_index], elec_eta[i][e_index], jet_phi[i][j], jet_eta[i][j]) < 0.4):
-        continue
-    if dR(elec_phi[event_idx][e_index], elec_eta[event_idx][e_index], jet_phi[event_idx][i], jet_eta[event_idx][i]) < 0.4 or dR(muon_phi[event_idx][mu_index], muon_eta[event_idx][mu_index], jet_phi[event_idx][i], jet_eta[event_idx][i]) < 0.4:
-        continue
+   # if (dR(elec_phi[i][e_index], elec_eta[i][e_index], jet_phi[i][j], jet_eta[i][j]) < 0.4):
+    #    continue
+    
 
     e4vector.SetPtEtaPhiM(elec_pt[event_idx][e_index], elec_eta[event_idx][e_index], elec_phi[event_idx][e_index],
                           elec_mass[event_idx][e_index])
@@ -270,7 +271,7 @@ for event_idx in range(len(elec_pt)):
     total_jet_pt.append(temp_total_jet_pt)
     total_pt.append(temp_total_pt)
     
-    
+ print(len(e_pt))
         
         
     ## output file to save post cut arrays
