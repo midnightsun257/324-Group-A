@@ -70,11 +70,13 @@ e_pt = []
 e_eta = []
 e_phi = []
 e_charge = []
+e_mass = []
 
 mu_pt = []
 mu_eta = []
 mu_phi = []
 mu_charge = []
+mu_mass= []
 
 j_pt = []
 j_eta = []
@@ -95,11 +97,13 @@ l_pt = []
 l_eta = []
 l_phi = []
 l_mass = []
+l_charge = []
 
 sl_pt = []
 sl_eta = []
 sl_phi = []
 sl_mass = []
+sl_charge = []
 
 MET_pt= []
 MET_phi=[]
@@ -129,7 +133,10 @@ for event_idx in range(len(elec_pt)):
     ef_idx = []
     muf_idx = []
     jf_idx = []
-   
+
+   #check if its running
+    #if event_idx%1000 == 0:
+     #   print((event_idx/len(elec_pt)))
 
     e4vector = ROOT.TLorentzVector()
     m4vector = ROOT.TLorentzVector()
@@ -170,10 +177,23 @@ for event_idx in range(len(elec_pt)):
     e_index = ef_idx[0]
     mu_index = muf_idx[0]
 
+    #check e_index
+    #print(e_index)
+
+    e4vector.SetPtEtaPhiM(elec_pt[event_idx][e_index], elec_eta[event_idx][e_index], elec_phi[event_idx][e_index],
+                          elec_mass[event_idx][e_index])
+    m4vector.SetPtEtaPhiM(muon_pt[event_idx][mu_index], muon_eta[event_idx][mu_index], muon_phi[event_idx][mu_index],
+                          muon_mass[event_idx][mu_index])
+    if (e4vector + m4vector).M() < 20:
+        continue
+
     ## jets
+     # where is ljet_idx and sljet_idx ??
     counter = 0
     for i in range(len(jet_pt[event_idx])):
-        if dR(elec_phi[event_idx][e_index], elec_eta[event_idx][e_index], jet_phi[event_idx][i], jet_eta[event_idx][i]) < 0.4 or dR(muon_phi[event_idx][mu_index], muon_eta[event_idx][mu_index], jet_phi[event_idx][i], jet_eta[event_idx][i]) < 0.4:
+        if dR(elec_phi[event_idx][e_index], elec_eta[event_idx][e_index], jet_phi[event_idx][i],
+              jet_eta[event_idx][i]) < 0.4 or dR(muon_phi[event_idx][mu_index], muon_eta[event_idx][mu_index],
+                                                 jet_phi[event_idx][i], jet_eta[event_idx][i]) < 0.4:
             continue
         if jet_pt[event_idx][i] < 30:
             continue
@@ -185,25 +205,15 @@ for event_idx in range(len(elec_pt)):
             counter += 1
     ##print(j_idx) --- ok till here
 
-   # if (dR(elec_phi[i][e_index], elec_eta[i][e_index], jet_phi[i][j], jet_eta[i][j]) < 0.4):
-    #    continue
-    
-
-    e4vector.SetPtEtaPhiM(elec_pt[event_idx][e_index], elec_eta[event_idx][e_index], elec_phi[event_idx][e_index],
-                          elec_mass[event_idx][e_index])
-    m4vector.SetPtEtaPhiM(elec_pt[event_idx][e_index], elec_eta[event_idx][e_index], elec_phi[event_idx][e_index],
-                          elec_mass[event_idx][e_index])
-    if (e4vector + m4vector).M() < 20:
-        continue
     if counter == 0:
         continue
-        
+    '''    
     llbar_deta= np.abs(np.asarray(l_eta)- np.asarray(sl_eta))
     llbar_dphi= np.abs(np.abs(np.abs(np.asarray(l_phi)- np.asarray(sl_phi)) - np.pi) - np.pi)
     bbbar_deta= np.abs(np.asarray(ljet_eta)- np.asarray(sljet_eta))
     bbbar_dphi= np.abs(np.abs(np.abs(np.asarray(ljet_phi)- np.asarray(sljet_phi)) - np.pi) - np.pi)
+'''
 
-    
         # look for event with great pt and greater than 25 and append to corresponding array after cuts
     ## add corresponding eta, phi, mass value in l and sl
 
@@ -216,9 +226,11 @@ for event_idx in range(len(elec_pt)):
         sl_phi.append(muon_phi[event_idx][mu_index])
         l_mass.append(elec_mass[event_idx][e_index])
         sl_mass.append(muon_mass[event_idx][mu_index])
+        l_charge.append(elec_charge[event_idx][e_index])
+        sl_charge.append(muon_charge[event_idx][mu_index])
         # add charge
 
-    if (mu_pt[event_idx][mu_index] > elec_pt[event_idx][e_index]) and (muon_pt[event_idx][mu_index]) > 25:
+    if (muon_pt[event_idx][mu_index] > elec_pt[event_idx][e_index]) and (muon_pt[event_idx][mu_index]) > 25:
         l_pt.append(muon_pt[event_idx][mu_index])
         sl_pt.append(elec_pt[event_idx][e_index])
         l_eta.append(muon_eta[event_idx][mu_index])
@@ -227,6 +239,8 @@ for event_idx in range(len(elec_pt)):
         sl_phi.append(elec_phi[event_idx][e_index])
         l_mass.append(muon_mass[event_idx][mu_index])
         sl_mass.append(elec_mass[event_idx][e_index])
+        l_charge.append(elec_charge[event_idx][e_index])
+        sl_charge.append(muon_charge[event_idx][mu_index])
     else:
         continue
 
@@ -234,12 +248,18 @@ for event_idx in range(len(elec_pt)):
     e_eta.append(elec_eta[event_idx][e_index])
     e_phi.append(elec_phi[event_idx][e_index])
     e_mass.append(elec_mass[event_idx][e_index])
+    e_charge.append(elec_charge[event_idx][e_index])
+
+    #print (e_pt)
 
     mu_pt.append(muon_pt[event_idx][mu_index])
     mu_eta.append(muon_eta[event_idx][mu_index])
     mu_phi.append(muon_phi[event_idx][mu_index])
     mu_mass.append(muon_mass[event_idx][mu_index])
+    mu_charge.append(muon_charge[event_idx][mu_index])
 
+    # dont have ljet_idx or sljet_idx but we have j_idx
+    '''
     ljet_pt.append(jet_pt[event_idx][ljet_idx])
     ljet_phi.append(jet_phi[event_idx][ljet_idx])
     ljet_eta.append(jet_eta[event_idx][ljet_idx])
@@ -249,17 +269,17 @@ for event_idx in range(len(elec_pt)):
     sljet_phi.append(jet_phi[event_idx][sljet_idx])
     sljet_eta.append(jet_eta[event_idx][sljet_idx])
     sljet_mass.append(jet_mass[event_idx][sljet_idx])
-    
+    '''
     temp_total_pt = 0
     temp_total_jet_pt =0
     
-    for i in elec_pt[event_idx]:  
+    for i in range(len(elec_pt[event_idx])):
         temp_total_pt += elec_pt[event_idx][i]
-        
-    for i in muon_pt[event_idx]:  
+
+    for i in range(len(muon_pt[event_idx])):
         temp_total_pt += muon_pt[event_idx][i]
         
-    for i in jet_pt[event_idx]:  
+    for i in range(len(jet_pt[event_idx])):
         temp_total_pt += jet_pt[event_idx][i]
         temp_total_jet_pt += jet_pt[event_idx][i]
     
@@ -271,8 +291,8 @@ for event_idx in range(len(elec_pt)):
     total_jet_pt.append(temp_total_jet_pt)
     total_pt.append(temp_total_pt)
     
- print(len(e_pt))
-        
+
+print(len(e_pt))
         
     ## output file to save post cut arrays
 
@@ -422,16 +442,16 @@ tree.Branch("genpart_charge", genpart_charge_arr, "genpart_charge/F")
 ## tree fill for all the arrays
 
 for i in range(len(e_pt)):
-    e_pt_arr[0] = e_pt[i]
-    e_phi_arr[0] = e_phi[i]
-    e_eta_arr[0] = e_eta[i]
-    e_charge_arr[0] = e_charge[i]
+    elec_pt_arr[0] = e_pt[i]
+    elec_phi_arr[0] = e_phi[i]
+    elec_eta_arr[0] = e_eta[i]
+    elec_charge_arr[0] = e_charge[i]
 
     mu_pt_arr[0] = mu_pt[i]
     mu_phi_arr[0] = mu_phi[i]
     mu_eta_arr[0] = mu_eta[i]
     mu_charge_arr[0] = mu_charge[i]
-
+    '''
     ljet_pt_arr[0] = ljet_pt[i]
     ljet_phi_arr[0] = ljet_phi[i]
     ljet_eta_arr[0] = ljet_eta[i]
@@ -441,7 +461,7 @@ for i in range(len(e_pt)):
     sljet_phi_arr[0] = sljet_phi[i]
     sljet_eta_arr[0] = sljet_eta[i]
     sljet_mass_arr[0] = sljet_mass[i]
-
+    '''
     l_pt_arr[0] = l_pt[i]
     l_phi_arr[0] = l_phi[i]
     l_eta_arr[0] = l_eta[i]
@@ -459,3 +479,4 @@ outputfile.Close()
 
 ## top quark reconstruction
 ## loook at the entanglements once we have quarks reconstructed
+
