@@ -495,11 +495,14 @@ for i in range(len(e_pt)):
     sl_phi_arr[0] = sl_phi[i]
     sl_eta_arr[0] = sl_eta[i]
     sl_charge_arr[0] = sl_charge[i]
-
-    jet_pt_arr[0] = jet_pt[i]
-    jet_eta_arr[0] = jet_eta[i]
-    jet_phi_arr[0] = jet_phi[i]
-    jet_btag_arr[0] = jet_btag[i]
+    
+    for j in range(len(selected_jet_pt[i])):
+        jet_pt_arr[j] = selected_jet_pt[i][j]
+    for j in range(len(selected_jet_eta[i])):
+        jet_eta_arr[j] = selected_jet_eta[i][j]
+        ## do same for others
+        jet_phi_arr[0] = jet_phi[i]
+        jet_btag_arr[0] = jet_btag[i]
 
     genpart_pt_arr[0] = genpart_pt[i]
     genpart_eta_arr[0] = genpart_eta[i]
