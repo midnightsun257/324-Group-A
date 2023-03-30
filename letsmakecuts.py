@@ -495,34 +495,27 @@ for i in range(len(e_pt)):
     sl_phi_arr[0] = sl_phi[i]
     sl_eta_arr[0] = sl_eta[i]
     sl_charge_arr[0] = sl_charge[i]
-    
+
     for j in range(len(selected_jet_pt[i])):
         jet_pt_arr[j] = selected_jet_pt[i][j]
-    for j in range(len(selected_jet_eta[i])):
         jet_eta_arr[j] = selected_jet_eta[i][j]
-        ## do same for others
-        jet_phi_arr[0] = jet_phi[i]
-        jet_btag_arr[0] = jet_btag[i]
-        
+        jet_phi_arr[j] = selected_jet_phi[i][j]
+        jet_btag_arr[j] = selected_jet_btag[i][j]
+
     for j in range(len(selected_genpart_pt[i])):
         genpart_pt_arr[j] = selected_genpart_pt[i][j]
-    for j in range(len(selected_genpart_eta[i])):
         genpart_eta_arr[j] = selected_genpart_eta[i][j]
-    for j in range(len(selected_genpart_phi[i])):
         genpart_phi_arr[j] = selected_genpart_phi[i][j]
-    for j in range(len(selected_genpart_mass[i])):
         genpart_mass_arr[j] = selected_genpart_mass[i][j]
-    for j in range(len(selected_genpart_pid[i])):
         genpart_pid_arr[j] = selected_genpart_pid[i][j]
-    for j in range(len(selected_genpart_status[i])):
         genpart_status_arr[j] = selected_genpart_status[i][j]
-    for j in range(len(selected_genpart_pt[i])):
         genpart_charge_arr[j] = selected_genpart_charge[i][j]
 
-    genjet_eta_arr[0] = genjet_eta[i]
-    genjet_mass_arr[0] = genjet_mass[i]
-    genjet_phi_arr[0] = genjet_phi[i]
-    genjet_pt_arr[0] = genjet_pt[i]
+    for j in range(len(selected_genjet_eta[i])):
+        genjet_eta_arr[j] = selected_genjet_eta[i][j]
+        genjet_mass_arr[j] = selected_genjet_mass[i][j]
+        genjet_phi_arr[j] = selected_genjet_phi[i][j]
+        genjet_pt_arr[j] = selected_genjet_pt[i][j]
 
     llbar_deta_arr[0] = llbar_deta[i]
     llbar_dphi_arr[0] = llbar_dphi[i]
@@ -536,4 +529,3 @@ outputfile.Close()
 
 ## top quark reconstruction
 ## loook at the entanglements once we have quarks reconstructed
-
