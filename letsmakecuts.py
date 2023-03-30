@@ -46,7 +46,7 @@ jet_pt = fileptr['Delphes_Ntuples']['jet_pt'].array()
 jet_eta = fileptr['Delphes_Ntuples']['jet_eta'].array()
 jet_phi = fileptr['Delphes_Ntuples']['jet_phi'].array()
 jet_btag = fileptr['Delphes_Ntuples']['jet_btag'].array()
-#make jet_mass
+jet_mass = fileptr['Delphes_Ntuples']['jet_mass'].array()
 
 met_pt = fileptr['Delphes_Ntuples']['met_pt'].array()
 met_phi = fileptr['Delphes_Ntuples']['met_phi'].array()
@@ -82,6 +82,7 @@ mu_mass= []
 j_pt = []
 j_eta = []
 j_btag = []
+j_mass = []
 
 ## ljet_pt, sl_jetpt --- done
 ljet_pt = []
@@ -201,19 +202,19 @@ for event_idx in range(len(elec_pt)):
         if abs(jet_eta[event_idx][i]) > 2.4 or (1.4442 < abs(jet_eta[event_idx][i]) < 1.5660):
             continue
         j_idx.append(i)
-        
-        if len(j_idx) <2:
-            continue
+
 
         if jet_btag[event_idx][i] > 0:
             counter += 1
-       
-    ljet_idx= j_idx[0]  
-    sl_jet_idx= j_idx[1]
-    ##print(j_idx) --- ok till here
-
+    if len(j_idx) < 2:
+        continue
     if counter == 0:
         continue
+
+   # print(len(j_idx))
+    ljet_idx = j_idx[0]
+    sljet_idx = j_idx[1]
+   # print(j_idx) #--- ok till here
     '''    
     llbar_deta= np.abs(np.asarray(l_eta)- np.asarray(sl_eta))
     llbar_dphi= np.abs(np.abs(np.abs(np.asarray(l_phi)- np.asarray(sl_phi)) - np.pi) - np.pi)
@@ -265,8 +266,6 @@ for event_idx in range(len(elec_pt)):
     mu_mass.append(muon_mass[event_idx][mu_index])
     mu_charge.append(muon_charge[event_idx][mu_index])
 
-    
-    
     ljet_pt.append(jet_pt[event_idx][ljet_idx])
     ljet_phi.append(jet_phi[event_idx][ljet_idx])
     ljet_eta.append(jet_eta[event_idx][ljet_idx])
@@ -276,7 +275,7 @@ for event_idx in range(len(elec_pt)):
     sljet_phi.append(jet_phi[event_idx][sljet_idx])
     sljet_eta.append(jet_eta[event_idx][sljet_idx])
     sljet_mass.append(jet_mass[event_idx][sljet_idx])
-    
+
     temp_total_pt = 0
     temp_total_jet_pt =0
     
@@ -299,7 +298,7 @@ for event_idx in range(len(elec_pt)):
     total_pt.append(temp_total_pt)
     
 
-print(len(e_pt))
+#print(len(e_pt))
         
     ## output file to save post cut arrays
 
@@ -446,6 +445,19 @@ tree.Branch("genpart_pid", genpart_pid_arr, "genpart_pid/F")
 tree.Branch("genpart_status", genpart_status_arr, "genpart_status/F")
 tree.Branch("genpart_charge", genpart_charge_arr, "genpart_charge/F")
 
+tree.Branch("genjet_eta", genjet_eta_arr, "genjet_eta/F")
+tree.Branch("genjet_mass", genjet_mass_arr, "genjet_mass/F")
+tree.Branch("genjet_pt", genjet_pt_arr, "genjet_pt/F")
+tree.Branch("genjet_phi", genjet_phi_arr, "genjet_phi/F")
+
+tree.Branch("genpart_pt", genpart_pt_arr, "genpart_pt/F")
+tree.Branch("genpart_eta", genpart_eta_arr, "genpart_eta/F")
+tree.Branch("genpart_phi", genpart_phi_arr, "genpart_phi/F")
+tree.Branch("genpart_mass", genpart_mass_arr, "genpart_mass/F")
+tree.Branch("genpart_pid", genpart_pid_arr, "genpart_pid/F")
+tree.Branch("genpart_status", genpart_status_arr, "genpart_status/F")
+tree.Branch("genpart_charge", genpart_charge_arr, "genpart_charge/F")
+
 tree.Branch("llbar_deta", llbar_deta_arr, "llbar_deta/F")
 tree.Branch("llphi_deta", llbar_dphi_arr, "llbar_dphi/F")
 tree.Branch("bbbar_deta", bbbar_deta_arr, "bbbar_deta/F")
@@ -463,7 +475,7 @@ for i in range(len(e_pt)):
     mu_phi_arr[0] = mu_phi[i]
     mu_eta_arr[0] = mu_eta[i]
     mu_charge_arr[0] = mu_charge[i]
-    '''
+
     ljet_pt_arr[0] = ljet_pt[i]
     ljet_phi_arr[0] = ljet_phi[i]
     ljet_eta_arr[0] = ljet_eta[i]
@@ -473,7 +485,7 @@ for i in range(len(e_pt)):
     sljet_phi_arr[0] = sljet_phi[i]
     sljet_eta_arr[0] = sljet_eta[i]
     sljet_mass_arr[0] = sljet_mass[i]
-    '''
+
     l_pt_arr[0] = l_pt[i]
     l_phi_arr[0] = l_phi[i]
     l_eta_arr[0] = l_eta[i]
@@ -483,30 +495,29 @@ for i in range(len(e_pt)):
     sl_phi_arr[0] = sl_phi[i]
     sl_eta_arr[0] = sl_eta[i]
     sl_charge_arr[0] = sl_charge[i]
-    
-    jet_pt_arr[0]= jet_pt[i]
-    jet_eta_arr[0]= jet_eta[i]
-    jet_phi_arr[0]= jet_phi[i]
-    jet_btag_arr[0]=jet_btag[i]
-    
-    genpart_pt_arr[0]= genpart_pt[i]
-    genpart_eta_arr[0]= genpart_eta[i]
-    genpart_phi_arr[0]= genpart_phi[i]
-    genpart_mass_arr[0]= genpart_mass[i]
-    genpart_pid_arr[0]= genpart_pid[i]
-    genpart_status_arr[0]= genpart_status[i]
-    genpart_charge_arr[0]= genpart_charge[i]
-    
-    genjet_eta_arr[0]= genjet_eta[i]
-    genjet_mass_arr[0]= genjet_mass[i]
-    genjet_phi_arr[0]= genjet_phi[i]
-    genjet_pt_arr[0]= genjet_pt[i]
-    
+
+    jet_pt_arr[0] = jet_pt[i]
+    jet_eta_arr[0] = jet_eta[i]
+    jet_phi_arr[0] = jet_phi[i]
+    jet_btag_arr[0] = jet_btag[i]
+
+    genpart_pt_arr[0] = genpart_pt[i]
+    genpart_eta_arr[0] = genpart_eta[i]
+    genpart_phi_arr[0] = genpart_phi[i]
+    genpart_mass_arr[0] = genpart_mass[i]
+    genpart_pid_arr[0] = genpart_pid[i]
+    genpart_status_arr[0] = genpart_status[i]
+    genpart_charge_arr[0] = genpart_charge[i]
+
+    genjet_eta_arr[0] = genjet_eta[i]
+    genjet_mass_arr[0] = genjet_mass[i]
+    genjet_phi_arr[0] = genjet_phi[i]
+    genjet_pt_arr[0] = genjet_pt[i]
+
     llbar_deta_arr[0] = llbar_deta[i]
     llbar_dphi_arr[0] = llbar_dphi[i]
     bbbar_deta_arr[0] = bbbar_deta[i]
     bbbar_dphi_arr[0] = bbbar_dphi[i]
-    
 
     tree.Fill()
 
