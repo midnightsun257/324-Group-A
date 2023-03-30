@@ -200,9 +200,15 @@ for event_idx in range(len(elec_pt)):
         if abs(jet_eta[event_idx][i]) > 2.4 or (1.4442 < abs(jet_eta[event_idx][i]) < 1.5660):
             continue
         j_idx.append(i)
+        
+        if len(j_idx) <2:
+            continue
 
         if jet_btag[event_idx][i] > 0:
             counter += 1
+       
+    ljet_idx= j_idx[0]  
+    sl_jet_idx= j_idx[1]
     ##print(j_idx) --- ok till here
 
     if counter == 0:
@@ -258,8 +264,8 @@ for event_idx in range(len(elec_pt)):
     mu_mass.append(muon_mass[event_idx][mu_index])
     mu_charge.append(muon_charge[event_idx][mu_index])
 
-    # dont have ljet_idx or sljet_idx but we have j_idx
-    '''
+    
+    
     ljet_pt.append(jet_pt[event_idx][ljet_idx])
     ljet_phi.append(jet_phi[event_idx][ljet_idx])
     ljet_eta.append(jet_eta[event_idx][ljet_idx])
@@ -269,7 +275,7 @@ for event_idx in range(len(elec_pt)):
     sljet_phi.append(jet_phi[event_idx][sljet_idx])
     sljet_eta.append(jet_eta[event_idx][sljet_idx])
     sljet_mass.append(jet_mass[event_idx][sljet_idx])
-    '''
+    
     temp_total_pt = 0
     temp_total_jet_pt =0
     
