@@ -46,6 +46,7 @@ jet_pt = fileptr['Delphes_Ntuples']['jet_pt'].array()
 jet_eta = fileptr['Delphes_Ntuples']['jet_eta'].array()
 jet_phi = fileptr['Delphes_Ntuples']['jet_phi'].array()
 jet_btag = fileptr['Delphes_Ntuples']['jet_btag'].array()
+#make jet_mass
 
 met_pt = fileptr['Delphes_Ntuples']['met_pt'].array()
 met_phi = fileptr['Delphes_Ntuples']['met_phi'].array()
@@ -445,6 +446,11 @@ tree.Branch("genpart_pid", genpart_pid_arr, "genpart_pid/F")
 tree.Branch("genpart_status", genpart_status_arr, "genpart_status/F")
 tree.Branch("genpart_charge", genpart_charge_arr, "genpart_charge/F")
 
+tree.Branch("llbar_deta", llbar_deta_arr, "llbar_deta/F")
+tree.Branch("llphi_deta", llbar_dphi_arr, "llbar_dphi/F")
+tree.Branch("bbbar_deta", bbbar_deta_arr, "bbbar_deta/F")
+tree.Branch("bbbar_dphi", bbbar_dphi_arr, "bbbar_dphi/F")
+
 ## tree fill for all the arrays
 
 for i in range(len(e_pt)):
@@ -477,6 +483,30 @@ for i in range(len(e_pt)):
     sl_phi_arr[0] = sl_phi[i]
     sl_eta_arr[0] = sl_eta[i]
     sl_charge_arr[0] = sl_charge[i]
+    
+    jet_pt_arr[0]= jet_pt[i]
+    jet_eta_arr[0]= jet_eta[i]
+    jet_phi_arr[0]= jet_phi[i]
+    jet_btag_arr[0]=jet_btag[i]
+    
+    genpart_pt_arr[0]= genpart_pt[i]
+    genpart_eta_arr[0]= genpart_eta[i]
+    genpart_phi_arr[0]= genpart_phi[i]
+    genpart_mass_arr[0]= genpart_mass[i]
+    genpart_pid_arr[0]= genpart_pid[i]
+    genpart_status_arr[0]= genpart_status[i]
+    genpart_charge_arr[0]= genpart_charge[i]
+    
+    genjet_eta_arr[0]= genjet_eta[i]
+    genjet_mass_arr[0]= genjet_mass[i]
+    genjet_phi_arr[0]= genjet_phi[i]
+    genjet_pt_arr[0]= genjet_pt[i]
+    
+    llbar_deta_arr[0] = llbar_deta[i]
+    llbar_dphi_arr[0] = llbar_dphi[i]
+    bbbar_deta_arr[0] = bbbar_deta[i]
+    bbbar_dphi_arr[0] = bbbar_dphi[i]
+    
 
     tree.Fill()
 
