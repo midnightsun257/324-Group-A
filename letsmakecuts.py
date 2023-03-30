@@ -503,14 +503,21 @@ for i in range(len(e_pt)):
         ## do same for others
         jet_phi_arr[0] = jet_phi[i]
         jet_btag_arr[0] = jet_btag[i]
-
-    genpart_pt_arr[0] = genpart_pt[i]
-    genpart_eta_arr[0] = genpart_eta[i]
-    genpart_phi_arr[0] = genpart_phi[i]
-    genpart_mass_arr[0] = genpart_mass[i]
-    genpart_pid_arr[0] = genpart_pid[i]
-    genpart_status_arr[0] = genpart_status[i]
-    genpart_charge_arr[0] = genpart_charge[i]
+        
+    for j in range(len(selected_genpart_pt[i])):
+        genpart_pt_arr[j] = selected_genpart_pt[i][j]
+    for j in range(len(selected_genpart_eta[i])):
+        genpart_eta_arr[j] = selected_genpart_eta[i][j]
+    for j in range(len(selected_genpart_phi[i])):
+        genpart_phi_arr[j] = selected_genpart_phi[i][j]
+    for j in range(len(selected_genpart_mass[i])):
+        genpart_mass_arr[j] = selected_genpart_mass[i][j]
+    for j in range(len(selected_genpart_pid[i])):
+        genpart_pid_arr[j] = selected_genpart_pid[i][j]
+    for j in range(len(selected_genpart_status[i])):
+        genpart_status_arr[j] = selected_genpart_status[i][j]
+    for j in range(len(selected_genpart_pt[i])):
+        genpart_charge_arr[j] = selected_genpart_charge[i][j]
 
     genjet_eta_arr[0] = genjet_eta[i]
     genjet_mass_arr[0] = genjet_mass[i]
