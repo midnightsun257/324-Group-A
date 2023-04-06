@@ -215,13 +215,12 @@ for event_idx in range(len(elec_pt)):
     ljet_idx = j_idx[0]
     sljet_idx = j_idx[1]
    # print(j_idx) #--- ok till here
-    '''    
+    '''
     llbar_deta= np.abs(np.asarray(l_eta)- np.asarray(sl_eta))
     llbar_dphi= np.abs(np.abs(np.abs(np.asarray(l_phi)- np.asarray(sl_phi)) - np.pi) - np.pi)
     bbbar_deta= np.abs(np.asarray(ljet_eta)- np.asarray(sljet_eta))
     bbbar_dphi= np.abs(np.abs(np.abs(np.asarray(ljet_phi)- np.asarray(sljet_phi)) - np.pi) - np.pi)
-'''
-
+    '''
         # look for event with great pt and greater than 25 and append to corresponding array after cuts
     ## add corresponding eta, phi, mass value in l and sl
 
@@ -328,7 +327,23 @@ selected_genpart_pid = genpart_pid[final_array == 1]
 selected_genpart_status = genpart_status[final_array == 1]
 selected_genpart_charge = genpart_charge[final_array == 1]
 
+ljet_eta = np.array(ljet_eta)
+sljet_eta = np.array(sljet_eta)
 
+ljet_phi = np.array(ljet_phi)
+sljet_phi = np.array(sljet_phi)
+
+l_eta = np.array(l_eta)
+sl_eta = np.array(sl_eta)
+
+l_phi = np.array(l_phi)
+sl_phi = np.array(sl_phi)
+
+bbbar_dphi = abs(abs(abs(ljet_phi - sljet_phi) - np.pi) - np.pi)
+bbbar_deta = abs(ljet_eta - sljet_eta)
+
+llbar_dphi = abs(abs(abs(l_phi - sl_phi) - np.pi) - np.pi)
+llbar_deta = abs(l_eta - sl_eta)
 
 ## make histograms
 outputfile = ROOT.TFile(args.output, 'recreate')
@@ -397,71 +412,71 @@ genpart_status_arr = array('f', 10000*[0.])
 genpart_charge_arr = array('f', 10000*[0.])
 
 # create tree.Branch
-tree.Branch("elec_pt", elec_pt_arr, "elec_pt/F")
-tree.Branch("elec_eta", elec_eta_arr, "elec_eta/F")
-tree.Branch("elec_phi", elec_phi_arr, "elec_phi/F")
-tree.Branch("elec_charge", elec_charge_arr, "elec_charge/F")
+tree.Branch("selected_elec_pt", elec_pt_arr, "selected_elec_pt/F")
+tree.Branch("selected_elec_eta", elec_eta_arr, "selected_elec_eta/F")
+tree.Branch("selected_elec_phi", elec_phi_arr, "selected_elec_phi/F")
+tree.Branch("selected_elec_charge", elec_charge_arr, "selected_elec_charge/F")
 
-tree.Branch("mu_pt", mu_pt_arr, "mu_pt/F")
-tree.Branch("mu_eta", mu_eta_arr, "mu_eta/F")
-tree.Branch("mu_phi", mu_phi_arr, "mu_phi/F")
-tree.Branch("mu_charge", mu_charge_arr, "mu_charge/F")
+tree.Branch("selected_mu_pt", mu_pt_arr, "selected_mu_pt/F")
+tree.Branch("selected_mu_eta", mu_eta_arr, "selected_mu_eta/F")
+tree.Branch("selected_mu_phi", mu_phi_arr, "selected_mu_phi/F")
+tree.Branch("selected_mu_charge", mu_charge_arr, "selected_mu_charge/F")
 
-tree.Branch("ljet_pt", ljet_pt_arr, "ljet_pt/F")
-tree.Branch("ljet_eta", ljet_eta_arr, "ljet_eta/F")
-tree.Branch("ljet_phi", ljet_phi_arr, "ljet_phi/F")
-tree.Branch("ljet_charge", ljet_mass_arr, "ljet_charge/F")
+tree.Branch("selected_ljet_pt", ljet_pt_arr, "selected_ljet_pt/F")
+tree.Branch("selected_ljet_eta", ljet_eta_arr, "selected_ljet_eta/F")
+tree.Branch("selected_ljet_phi", ljet_phi_arr, "selected_ljet_phi/F")
+tree.Branch("selected_ljet_charge", ljet_mass_arr, "selected_ljet_charge/F")
 
-tree.Branch("sljet_pt", sljet_pt_arr, "sljet_pt/F")
-tree.Branch("sljet_eta", sljet_eta_arr, "ljet_eta/F")
-tree.Branch("sljet_phi", sljet_phi_arr, "ljet_phi/F")
-tree.Branch("sljet_mass", sljet_mass_arr, "ljet_mass/F")
+tree.Branch("selected_sljet_pt", sljet_pt_arr, "selected_sljet_pt/F")
+tree.Branch("selected_sljet_eta", sljet_eta_arr, "selected_ljet_eta/F")
+tree.Branch("selected_sljet_phi", sljet_phi_arr, "selected_ljet_phi/F")
+tree.Branch("selected_sljet_mass", sljet_mass_arr, "selected_ljet_mass/F")
 
-tree.Branch("l_pt", l_pt_arr, "l_pt/F")
-tree.Branch("l_eta", l_eta_arr, "l_eta/F")
-tree.Branch("l_phi", l_phi_arr, "l_phi/F")
-tree.Branch("l_charge", l_charge_arr, "l_charge/F")
+tree.Branch("selected_l_pt", l_pt_arr, "selected_l_pt/F")
+tree.Branch("selected_l_eta", l_eta_arr, "selected_l_eta/F")
+tree.Branch("selected_l_phi", l_phi_arr, "selected_l_phi/F")
+tree.Branch("selected_l_charge", l_charge_arr, "selected_l_charge/F")
 
-tree.Branch("sl_pt", sl_pt_arr, "sl_pt/F")
-tree.Branch("sl_eta", sl_eta_arr, "sl_eta/F")
-tree.Branch("sl_phi", sl_phi_arr, "sl_phi/F")
-tree.Branch("sl_charge", sl_charge_arr, "sl_charge/F")
+tree.Branch("selected_sl_pt", sl_pt_arr, "selected_sl_pt/F")
+tree.Branch("selected_sl_eta", sl_eta_arr, "selected_sl_eta/F")
+tree.Branch("selected_sl_phi", sl_phi_arr, "selected_sl_phi/F")
+tree.Branch("selected_sl_charge", sl_charge_arr, "selected_sl_charge/F")
 
-tree.Branch("jet_pt", jet_pt_arr, "jet_pt/F")
-tree.Branch("jet_eta", jet_eta_arr, "jet_eta/F")
-tree.Branch("jet_phi", jet_phi_arr, "jet_phi/F")
-tree.Branch("jet_btag", jet_btag_arr, "jet_btag/F")
+tree.Branch("selected_jet_pt", jet_pt_arr, "selected_jet_pt/F")
+tree.Branch("selected_jet_eta", jet_eta_arr, "selected_jet_eta/F")
+tree.Branch("selected_jet_phi", jet_phi_arr, "selected_jet_phi/F")
+tree.Branch("selected_jet_btag", jet_btag_arr, "selected_jet_btag/F")
 
-tree.Branch("genjet_eta", genjet_eta_arr, "genjet_eta/F")
-tree.Branch("genjet_mass", genjet_mass_arr, "genjet_mass/F")
-tree.Branch("genjet_pt", genjet_pt_arr, "genjet_pt/F")
-tree.Branch("genjet_phi", genjet_phi_arr, "genjet_phi/F")
+tree.Branch("selected_genjet_eta", genjet_eta_arr, "selected_genjet_eta/F")
+tree.Branch("selected_genjet_mass", genjet_mass_arr, "selected_genjet_mass/F")
+tree.Branch("selected_genjet_pt", genjet_pt_arr, "selected_genjet_pt/F")
+tree.Branch("selected_genjet_phi", genjet_phi_arr, "selected_genjet_phi/F")
 
-tree.Branch("genpart_pt", genpart_pt_arr, "genpart_pt/F")
-tree.Branch("genpart_eta", genpart_eta_arr, "genpart_eta/F")
-tree.Branch("genpart_phi", genpart_phi_arr, "genpart_phi/F")
-tree.Branch("genpart_mass", genpart_mass_arr, "genpart_mass/F")
-tree.Branch("genpart_pid", genpart_pid_arr, "genpart_pid/F")
-tree.Branch("genpart_status", genpart_status_arr, "genpart_status/F")
-tree.Branch("genpart_charge", genpart_charge_arr, "genpart_charge/F")
+tree.Branch("selected_genpart_pt", genpart_pt_arr, "selected_genpart_pt/F")
+tree.Branch("selected_genpart_eta", genpart_eta_arr, "selected_genpart_eta/F")
+tree.Branch("selected_genpart_phi", genpart_phi_arr, "selected_genpart_phi/F")
+tree.Branch("selected_genpart_mass", genpart_mass_arr, "selected_genpart_mass/F")
+tree.Branch("selected_genpart_pid", genpart_pid_arr, "selected_genpart_pid/F")
+tree.Branch("selected_genpart_status", genpart_status_arr, "selected_genpart_status/F")
+tree.Branch("selected_genpart_charge", genpart_charge_arr, "selected_genpart_charge/F")
 
-tree.Branch("genjet_eta", genjet_eta_arr, "genjet_eta/F")
-tree.Branch("genjet_mass", genjet_mass_arr, "genjet_mass/F")
-tree.Branch("genjet_pt", genjet_pt_arr, "genjet_pt/F")
-tree.Branch("genjet_phi", genjet_phi_arr, "genjet_phi/F")
+tree.Branch("selected_genjet_eta", genjet_eta_arr, "selected_genjet_eta/F")
+tree.Branch("selected_genjet_mass", genjet_mass_arr, "selected_genjet_mass/F")
+tree.Branch("selected_genjet_pt", genjet_pt_arr, "selected_genjet_pt/F")
+tree.Branch("selected_genjet_phi", genjet_phi_arr, "selected_genjet_phi/F")
 
-tree.Branch("genpart_pt", genpart_pt_arr, "genpart_pt/F")
-tree.Branch("genpart_eta", genpart_eta_arr, "genpart_eta/F")
-tree.Branch("genpart_phi", genpart_phi_arr, "genpart_phi/F")
-tree.Branch("genpart_mass", genpart_mass_arr, "genpart_mass/F")
-tree.Branch("genpart_pid", genpart_pid_arr, "genpart_pid/F")
-tree.Branch("genpart_status", genpart_status_arr, "genpart_status/F")
-tree.Branch("genpart_charge", genpart_charge_arr, "genpart_charge/F")
+tree.Branch("selected_genpart_pt", genpart_pt_arr, "selected_genpart_pt/F")
+tree.Branch("selected_genpart_eta", genpart_eta_arr, "selected_genpart_eta/F")
+tree.Branch("selected_genpart_phi", genpart_phi_arr, "selected_genpart_phi/F")
+tree.Branch("selected_genpart_mass", genpart_mass_arr, "selected_genpart_mass/F")
+tree.Branch("selected_genpart_pid", genpart_pid_arr, "selected_genpart_pid/F")
+tree.Branch("selected_genpart_status", genpart_status_arr, "selected_genpart_status/F")
+tree.Branch("selected_genpart_charge", genpart_charge_arr, "selected_genpart_charge/F")
 
-tree.Branch("llbar_deta", llbar_deta_arr, "llbar_deta/F")
-tree.Branch("llphi_deta", llbar_dphi_arr, "llbar_dphi/F")
-tree.Branch("bbbar_deta", bbbar_deta_arr, "bbbar_deta/F")
-tree.Branch("bbbar_dphi", bbbar_dphi_arr, "bbbar_dphi/F")
+tree.Branch("selected_llbar_deta", llbar_deta_arr, "selected_llbar_deta/F")
+tree.Branch("selected_llphi_deta", llbar_dphi_arr, "selected_llbar_dphi/F")
+tree.Branch("selected_bbbar_deta", bbbar_deta_arr, "selected_bbbar_deta/F")
+tree.Branch("selected_bbbar_dphi", bbbar_dphi_arr, "selected_bbbar_dphi/F")
 
 ## tree fill for all the arrays
 
@@ -496,31 +511,32 @@ for i in range(len(e_pt)):
     sl_eta_arr[0] = sl_eta[i]
     sl_charge_arr[0] = sl_charge[i]
 
-    for j in range(len(selected_jet_pt[i])):
-        jet_pt_arr[j] = selected_jet_pt[i][j]
-        jet_eta_arr[j] = selected_jet_eta[i][j]
-        jet_phi_arr[j] = selected_jet_phi[i][j]
-        jet_btag_arr[j] = selected_jet_btag[i][j]
-
-    for j in range(len(selected_genpart_pt[i])):
-        genpart_pt_arr[j] = selected_genpart_pt[i][j]
-        genpart_eta_arr[j] = selected_genpart_eta[i][j]
-        genpart_phi_arr[j] = selected_genpart_phi[i][j]
-        genpart_mass_arr[j] = selected_genpart_mass[i][j]
-        genpart_pid_arr[j] = selected_genpart_pid[i][j]
-        genpart_status_arr[j] = selected_genpart_status[i][j]
-        genpart_charge_arr[j] = selected_genpart_charge[i][j]
-
-    for j in range(len(selected_genjet_eta[i])):
-        genjet_eta_arr[j] = selected_genjet_eta[i][j]
-        genjet_mass_arr[j] = selected_genjet_mass[i][j]
-        genjet_phi_arr[j] = selected_genjet_phi[i][j]
-        genjet_pt_arr[j] = selected_genjet_pt[i][j]
-
     llbar_deta_arr[0] = llbar_deta[i]
     llbar_dphi_arr[0] = llbar_dphi[i]
     bbbar_deta_arr[0] = bbbar_deta[i]
     bbbar_dphi_arr[0] = bbbar_dphi[i]
+
+    for j in range(len(jet_pt[i])):
+        jet_pt_arr[j] = jet_pt[i][j]
+        jet_eta_arr[j] = jet_eta[i][j]
+        jet_phi_arr[j] = jet_phi[i][j]
+        jet_btag_arr[j] = jet_btag[i][j]
+
+    for j in range(len(genpart_pt[i])):
+        genpart_pt_arr[j] = genpart_pt[i][j]
+        genpart_eta_arr[j] = genpart_eta[i][j]
+        genpart_phi_arr[j] = genpart_phi[i][j]
+        genpart_mass_arr[j] = genpart_mass[i][j]
+        genpart_pid_arr[j] = genpart_pid[i][j]
+        genpart_status_arr[j] = genpart_status[i][j]
+        genpart_charge_arr[j] = genpart_charge[i][j]
+
+    for j in range(len(genjet_eta[i])):
+        genjet_eta_arr[j] = genjet_eta[i][j]
+        genjet_mass_arr[j] = genjet_mass[i][j]
+        genjet_phi_arr[j] = genjet_phi[i][j]
+        genjet_pt_arr[j] = genjet_pt[i][j]
+
 
     tree.Fill()
 
