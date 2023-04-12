@@ -446,7 +446,7 @@ tree.Branch("selected_sl_phi", sl_phi_arr, "selected_sl_phi/F")
 tree.Branch("selected_sl_charge", sl_charge_arr, "selected_sl_charge/F")
 
 #jet size
-tree.Branch("jet_size", jet_size_arr, "jet_size/F")
+tree.Branch("jet_size", jet_size_arr, "jet_size/I")
 
 tree.Branch("selected_jet_pt", jet_pt_arr, "selected_jet_pt/F")
 tree.Branch("selected_jet_eta", jet_eta_arr, "selected_jet_eta/F")
@@ -457,7 +457,7 @@ tree.Branch("selected_genjet_eta", genjet_eta_arr, "selected_genjet_eta/F")
 tree.Branch("selected_genjet_mass", genjet_mass_arr, "selected_genjet_mass/F")
 tree.Branch("selected_genjet_pt", genjet_pt_arr, "selected_genjet_pt/F")
 tree.Branch("selected_genjet_phi", genjet_phi_arr, "selected_genjet_phi/F")
-tree.Branch("genjet_size", genjet_size_arr, "genjet_size/F")
+tree.Branch("genjet_size", genjet_size_arr, "genjet_size/I")
 
 tree.Branch("selected_genpart_pt", genpart_pt_arr, "selected_genpart_pt/F")
 tree.Branch("selected_genpart_eta", genpart_eta_arr, "selected_genpart_eta/F")
@@ -466,7 +466,7 @@ tree.Branch("selected_genpart_mass", genpart_mass_arr, "selected_genpart_mass/F"
 tree.Branch("selected_genpart_pid", genpart_pid_arr, "selected_genpart_pid/F")
 tree.Branch("selected_genpart_status", genpart_status_arr, "selected_genpart_status/F")
 tree.Branch("selected_genpart_charge", genpart_charge_arr, "selected_genpart_charge/F")
-tree.Branch("genpart_size", genpart_size_arr, "genpart_size/F")
+tree.Branch("genpart_size", genpart_size_arr, "genpart_size/I")
 
 tree.Branch("selected_llbar_deta", llbar_deta_arr, "selected_llbar_deta/F")
 tree.Branch("selected_llphi_deta", llbar_dphi_arr, "selected_llbar_dphi/F")
