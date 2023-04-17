@@ -85,7 +85,7 @@ atop_rap = []
 tt_mass = []
 gen_tt_mass = []
 
-get_top_pt = []
+gen_top_pt = []
 gen_top_eta = []
 gen_top_phi = []
 gen_top_rap = []
@@ -153,8 +153,120 @@ for eventidx in range(len(elec_pt)):
                                      jet_mass[eventidx][j])
 
             if jet_btag[i] != 0 and jet_btag[j] != 0:
-                tt_mass1, topp41, atopp41, newp41, anup41, sw1 = try_smear(jet14vector, jet24vector, alep4vector, lep4vector, metx, mety, eventidx)
-                tt_mass2, topp42, atopp42, newp42, anup42, sw2 = try_smear(jet24vector, jet14vector, alep4vector, lep4vector, metx, mety, eventidx)
+                tt_mass1, topp41, atopp41, nup41, anup41, sw1 = try_smear(jet14vector, jet24vector, alep4vector, lep4vector, metx, mety, eventidx)
+                tt_mass2, topp42, atopp42, nup42, anup42, sw2 = try_smear(jet24vector, jet14vector, alep4vector, lep4vector, metx, mety, eventidx)
 
-                if tt_mass1 = -999 and tt_mass2 = -999:
+                if tt_mass1 == -999 and tt_mass2 == -999:
                     continue
+
+                btag_counter = 2
+
+                if (tt_mass2 == -999) or ((tt_mass1 != -999 and tt_mass2 != -999) and ( sw2 <= sw1)):
+                    tt_mass_final = tt_mass1
+                    topp4_final = topp41
+                    atopp4_final = atopp41
+                    nup4_final = nup41
+                    anup4_final = anup41
+                    bp4_final = jet14vector
+                    abp4_final = jet24vector
+                if (tt_mass1 == -999) or ((tt_mass1 != -999 and tt_mass2 != -999) and ( sw1 < sw2)):
+                    tt_mass_final = tt_mass2
+                    topp4_final = topp42
+                    atopp4_final = atopp42
+                    nup4_final = nup42
+                    anup4_final = anup42
+                    bp4_final = jet24vector
+                    abp4_final = jet14vector
+
+                continue
+
+            if jet_btag[eventidx][i] + jet_btag[eventidx][j] == 1:
+                tt_mass1, topp41, atopp41, nup41, anup41, sw1 = try_smear(jet14vector, jet24vector, alep4vector, lep4vector, metx, mety, eventidx)
+                tt_mass2, topp42, atopp42, nup42, anup42, sw2 = try_smear(jet24vector, jet14vector, alep4vector, lep4vector, metx, mety, eventidx)
+
+                if tt_mass1 == -999 and tt_mass2 == -999:
+                    continue
+
+                if (tt_mass2 == -999 and high_w <= sw1) or ((tt_mass1!= -999 and tt_mass2 != -999) and sw2 <= sw1 and high_w <= sw1):
+                    tt_mass_final = tt_mass1
+                    topp4_final = topp41
+                    atopp4_final = atopp41
+                    nup4_final = nup41
+                    anup4_final = anup41
+                    bp4_final = jet14vector
+                    abp4_final = jet24vector
+                if (tt_mass1 == -999 and high_w < sw2) or ((tt_mass1!= -999 and tt_mass2 != -999) and sw1 <= sw2 and high_w <= sw2):
+                    tt_mass_final = tt_mass2
+                    topp4_final = topp42
+                    atopp4_final = atopp42
+                    nup4_final = nup42
+                    anup4_final = anup42
+                    bp4_final = jet24vector
+                    abp4_final = jet14vector
+
+        if tt_mass_final == 0 :
+            continue
+
+        for k in range(len(genpart_pt[eventidx])):
+            if genpart_pid[eventidx][k] == 6 and genpart_status[eventidx][k] == 62:
+                gentop4vector = ROOT.TLorentzVector()
+                gentop4vector.SetPtEtaPhiM(genpart_pt[eventidx][k], genpart_eta[eventidx][k], genpart_phi[eventidx][k], genpart_mass[eventidx][k])
+            if genpart_pid[eventidx][k] == -6 and genpart_status[eventidx][k] == 62:
+                genatop4vector = ROOT.TLorentzVector()
+                genatop4vector.SetPtEtaPhiM(genpart_pt[eventidx][k], genpart_eta[eventidx][k], genpart_phi[eventidx][k], [eventidx][k])
+
+        com4vector = genatop4vector + gentop4vector
+        tt_mass.append(tt_mass_final)
+        top_pt.append(topp4_final.Pt())
+        top_eta.append(topp4_final.Eta())
+        top_phi.append(topp4_final.Phi())
+        top_rap.append(topp4_final.Rapidity())
+
+        atop_pt.append(atopp4_final.Pt())
+        atop_eta.append(atopp4_final.Eta())
+        atop_phi.append(atopp4_final.Phi())
+        atop_rap.append(atopp4_final.Rapidity())
+
+        nu_pt.append(nup4_final.Pt())
+        nu_eta.append(nup4_final.Eta())
+        nu_phi.append(nup4_final.Phi())
+
+        anu_pt.append(anup4_final.Pt())
+        anu_eta.append(anup4_final.Eta())
+        anu_phi.append(anup4_final.Phi())
+
+        lep_pt.append(lep4vector.Pt())
+        lep_eta.append(lep4vector.Eta())
+        lep_phi.append(lep4vector.Phi())
+        lep_mass.append(lep4vector.M())
+
+        alep_pt.append(alep4vector.Pt())
+        alep_eta.append(alep4vector.Eta())
+        alep_phi.append(alep4vector.Phi())
+        alep_mass.append(alep4vector.M())
+
+        b_pt.append(bp4_final.Pt())
+        b_phi.append(bp4_final.Phi())
+        b_eta.append(bp4_final.Eta())
+        b_mass.append(bp4_final.M())
+
+        ab_pt.append(abp4_final.Pt())
+        ab_eta.append(abp4_final.Eta())
+        ab_phi.append(abp4_final.Phi())
+        ab_mass.append(abp4_final.M())
+
+        gen_tt_mass.append(com4vector.M())
+        gen_top_pt.append(gentop4vector.Pt())
+        gen_top_eta.append(gentop4vector.Eta())
+        gen_top_phi.append(gentop4vector.Phi())
+        gen_top_rap.append(gentop4vector.Rapidity())
+
+        gen_atop_pt.append(genatop4vector.Pt())
+        gen_atop_eta.append(genatop4vector.Eta())
+        gen_atop_phi.append(genatop4vector.Phi())
+        gen_atop_rap.append(genatop4vector.Rapidity())
+
+        final_array[eventidx] = 1
+
+
+
