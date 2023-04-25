@@ -12,6 +12,9 @@ args = parser.parse_args()
 #read in files
 fileptr = uproot.open(args.input)
 
+# output file
+outputfile = ROOT.TFile(args.output, 'toprecons')
+
 genpart_pt = fileptr['CutTree']['genpart_pt'].array()
 genpart_eta = fileptr['CutTree']['genpart_eta'].array()
 genpart_phi = fileptr['CutTree']['genpart_phi'].array()
