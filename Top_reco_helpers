@@ -168,44 +168,45 @@ def try_smear(jet1, jet2, lep1, lep2, metx, mety, evt_idx) :
         #Maybe see if a solution exists or not
         try    :
             d       = doubleNeutrinoSolutions(jet1_sm, jet2_sm, lep1_sm, lep2_sm, met_sm.Px(), met_sm.Py())
-            nu1     = Convertnuto4vec(d.nunu_s, 0, 0)
-            nubar1  = Convertnuto4vec(d.nunu_s, 0, 1)
-            
-            top_p1    = jet1_sm + lep1_sm + nu1
-            atop_p1   = jet2_sm + lep2_sm + nubar1
-            
-            if (len(d.nunu_s) >= 2) :
-                nu2     = Convertnuto4vec(d.nunu_s, 1, 0)
-                nubar2  = Convertnuto4vec(d.nunu_s, 1, 1)
-                
-                top_p2    = jet1_sm + lep1_sm + nu2
-                atop_p2   = jet2_sm + lep2_sm + nubar2
-                
-                if ((top_p2 + atop_p2).M() <=  (top_p1 + atop_p1).M()) :
-                    nu_final    = nu2
-                    nubar_final = nubar2
-                    top_final   = jet1_sm + lep1_sm + nu2
-                    atop_final  = jet2_sm + lep2_sm + nubar2
-                    
-                else : 
+            if len((nunu_s)>0): 
+                nu1     = Convertnuto4vec(d.nunu_s, 0, 0)
+                nubar1  = Convertnuto4vec(d.nunu_s, 0, 1)
+
+                top_p1    = jet1_sm + lep1_sm + nu1
+                atop_p1   = jet2_sm + lep2_sm + nubar1
+
+                if (len(d.nunu_s) >= 2) :
+                    nu2     = Convertnuto4vec(d.nunu_s, 1, 0)
+                    nubar2  = Convertnuto4vec(d.nunu_s, 1, 1)
+
+                    top_p2    = jet1_sm + lep1_sm + nu2
+                    atop_p2   = jet2_sm + lep2_sm + nubar2
+
+                    if ((top_p2 + atop_p2).M() <=  (top_p1 + atop_p1).M()) :
+                        nu_final    = nu2
+                        nubar_final = nubar2
+                        top_final   = jet1_sm + lep1_sm + nu2
+                        atop_final  = jet2_sm + lep2_sm + nubar2
+
+                    else : 
+                        nu_final    = nu1
+                        nubar_final = nubar1
+                        top_final   = jet1_sm + lep1_sm + nu1
+                        atop_final  = jet2_sm + lep2_sm + nubar1
+
+                else :
                     nu_final    = nu1
                     nubar_final = nubar1
                     top_final   = jet1_sm + lep1_sm + nu1
                     atop_final  = jet2_sm + lep2_sm + nubar1
-                    
-            else :
-                nu_final    = nu1
-                nubar_final = nubar1
-                top_final   = jet1_sm + lep1_sm + nu1
-                atop_final  = jet2_sm + lep2_sm + nubar1
-                
-            evt_w = get_mlb_weight(jet1_sm, lep1_sm) * get_mlb_weight(jet2_sm, lep2_sm)
-            
-            v_weights.append(evt_w)
-            vlv_nus.append(nu_final)
-            vlv_nubars.append(nubar_final)
-            vlv_tops.append(top_final)
-            vlv_antitops.append(atop_final)
+
+                evt_w = get_mlb_weight(jet1_sm, lep1_sm) * get_mlb_weight(jet2_sm, lep2_sm)
+
+                v_weights.append(evt_w)
+                vlv_nus.append(nu_final)
+                vlv_nubars.append(nubar_final)
+                vlv_tops.append(top_final)
+                vlv_antitops.append(atop_final)
             
         except np.linalg.LinAlgError : pass
         
