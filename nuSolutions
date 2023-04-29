@@ -18,7 +18,7 @@ def UnitCircle():
     return np.diag([1, 1, -1])
 
 
-def cofactor(A, (i, j)):
+def cofactor(A, i, j):
     '''Cofactor[i,j] of 3x3 matrix A'''
     a = A[not i:2 if i==2 else None:2 if i==1 else 1,
           not j:2 if j==2 else None:2 if j==1 else 1]
