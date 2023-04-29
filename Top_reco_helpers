@@ -168,7 +168,7 @@ def try_smear(jet1, jet2, lep1, lep2, metx, mety, evt_idx) :
         #Maybe see if a solution exists or not
         try    :
             d       = doubleNeutrinoSolutions(jet1_sm, jet2_sm, lep1_sm, lep2_sm, met_sm.Px(), met_sm.Py())
-            if len((nunu_s)>0): 
+            if len(d.nunu_s)>0: 
                 nu1     = Convertnuto4vec(d.nunu_s, 0, 0)
                 nubar1  = Convertnuto4vec(d.nunu_s, 0, 1)
 
