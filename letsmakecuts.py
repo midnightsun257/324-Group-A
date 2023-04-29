@@ -371,8 +371,8 @@ sl_phi_arr = array('f', [0.])
 sl_charge_arr = array('f', [0.])
 sl_mass_arr = array('f', [.0])
 
-met_pt_arr = array('f', [0.])
-met_phi_arr = array('f', [0.])
+MET_pt_arr = array('f', [0.])
+MET_phi_arr = array('f', [0.])
 
 total_pt_arr = array('f', [0.])
 total_jet_pt_arr = array('f', [0.])
@@ -469,6 +469,8 @@ tree.Branch("llphi_deta", llbar_dphi_arr, "llbar_dphi/F")
 tree.Branch("bbbar_deta", bbbar_deta_arr, "bbbar_deta/F")
 tree.Branch("bbbar_dphi", bbbar_dphi_arr, "bbbar_dphi/F")
 
+tree.Branch("met_pt_arr", MET_pt_arr, "met_pt_arr/F")
+tree.Branch("met_phi_arr", MET_phi_arr, "met_phi_arr/F")
 ## tree fill for all the arrays
 
 for i in range(len(e_pt)):
@@ -513,6 +515,9 @@ for i in range(len(e_pt)):
     jet_size_arr[0] = len(jet_pt[i])
     genjet_size_arr[0] = len(selected_genjet_pt[i])
     genpart_size_arr[0] = len(selected_genpart_pt[i])
+    
+    MET_pt_arr[0]= met_pt_arr[i]
+    MET_phi_arr[0]= met_phi_arr[i]
 
     for j in range(weight_size_arr[0]):
         selected_weight_arr[j] = selected_weight[i][j]
