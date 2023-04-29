@@ -1,8 +1,10 @@
+import ROOT
 import uproot
 import numpy as np
 from array import array
 import matplotlib.pyplot as plt
 import argparse
+import math
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-i', '--input', help='Input')
@@ -11,40 +13,38 @@ args = parser.parse_args()
 
 #read in files
 fileptr = uproot.open(args.input)
+outputfile = ROOT.TFile(args.output, 'recreate')
 
-# output file
-outputfile = ROOT.TFile(args.output, 'toprecons')
+genpart_pt = fileptr['CutTree']['selected_genpart_pt'].array()
+genpart_eta = fileptr['CutTree']['selected_genpart_eta'].array()
+genpart_phi = fileptr['CutTree']['selected_genpart_phi'].array()
+genpart_mass = fileptr['CutTree']['selected_genpart_mass'].array()
+genpart_pid = fileptr['CutTree']['selected_genpart_pid'].array()
+genpart_status = fileptr['CutTree']['selected_genpart_status'].array()
+genpart_charge = fileptr['CutTree']['selected_genpart_charge'].array()
 
-genpart_pt = fileptr['CutTree']['genpart_pt'].array()
-genpart_eta = fileptr['CutTree']['genpart_eta'].array()
-genpart_phi = fileptr['CutTree']['genpart_phi'].array()
-genpart_mass = fileptr['CutTree']['genpart_mass'].array()
-genpart_pid = fileptr['CutTree']['genpart_pid'].array()
-genpart_status = fileptr['CutTree']['genpart_status'].array()
-genpart_charge = fileptr['CutTree']['genpart_charge'].array()
+met_pt = fileptr['CutTree']['met_pt_arr'].array()
+met_phi = fileptr['CutTree']['met_phi_arr'].array()
 
-met_pt = fileptr['CutTree']['met_pt'].array()
-met_phi = fileptr['CutTree']['met_phi'].array()
+elec_pt = fileptr['CutTree']['selected_elec_pt'].array()
+elec_eta = fileptr['CutTree']['selected_elec_eta'].array()
+elec_phi = fileptr['CutTree']['selected_elec_phi'].array()
+elec_mass = fileptr['CutTree']['selected_elec_mass'].array()
+elec_charge = fileptr['CutTree']['selected_elec_charge'].array()
 
-elec_pt = fileptr['CutTree']['elec_pt'].array()
-elec_eta = fileptr['CutTree']['elec_eta'].array()
-elec_phi = fileptr['CutTree']['elec_phi'].array()
-elec_mass = fileptr['CutTree']['elec_mass'].array()
-elec_charge = fileptr['CutTree']['elec_charge'].array()
+muon_pt = fileptr['CutTree']['selected_mu_pt'].array()
+muon_eta = fileptr['CutTree']['selected_mu_eta'].array()
+muon_phi = fileptr['CutTree']['selected_mu_phi'].array()
+muon_mass = fileptr['CutTree']['selected_mu_mass'].array()
+muon_charge = fileptr['CutTree']['selected_mu_charge'].array()
 
-muon_pt = fileptr['CutTree']['muon_pt'].array()
-muon_eta = fileptr['CutTree']['muon_eta'].array()
-muon_phi = fileptr['CutTree']['muon_phi'].array()
-muon_mass = fileptr['CutTree']['muon_mass'].array()
-muon_charge = fileptr['CutTree']['muon_charge'].array()
+jet_pt = fileptr['CutTree']['selected_jet_pt'].array()
+jet_eta = fileptr['CutTree']['selected_jet_eta'].array()
+jet_phi = fileptr['CutTree']['selected_jet_phi'].array()
+jet_btag = fileptr['CutTree']['selected_jet_btag'].array()
+jet_mass = fileptr['CutTree']['selected_jet_mass'].array()
 
-jet_pt = fileptr['CutTree']['jet_pt'].array()
-jet_eta = fileptr['CutTree']['jet_eta'].array()
-jet_phi = fileptr['CutTree']['jet_phi'].array()
-jet_btag = fileptr['CutTree']['jet_btag'].array()
-jet_mass = fileptr['CutTree']['jet_mass'].array()
-
-weight = fileptr['CutTree']['weight'].array()
+weight = fileptr['CutTree']['selected_weight'].array()
 
 #empty arrys
 lep_pt = []
@@ -102,12 +102,13 @@ final_array = [0] * len(elec_pt)
 
 for eventidx in range(len(elec_pt)):
 
+    # assigning data to 4vector
+    # if e charge (of eventidx) is -1 and mu == 1 then e is lep and m is alep
+    # if charges are flipped then the opposite is true
+
     lep4vector = ROOT.TLorentzVector()
     alep4vector = ROOT.TLorentzVector()
 
-    # assigning data to 4vector
-    # if e charge (of eventidx) is -1 and mu == 1 then e is lep and m is alep
-    #if charges are flipped then the opposite is true
     if elec_charge[eventidx] == -1 and muon_charge[eventidx] == 1:
 
         lep4vector.SetPtEtaPhiM(elec_pt[eventidx], elec_eta[eventidx], elec_phi[eventidx],
@@ -124,8 +125,8 @@ for eventidx in range(len(elec_pt)):
                               muon_phi[eventidx],
                               muon_mass[eventidx])
 
-    metx = met_pt[eventidx] * cos(met_phi[eventidx])
-    mety = met_pt[eventidx] * sin(met_phi[eventidx])
+    metx = met_pt[eventidx] * math.cos(met_phi[eventidx])
+    mety = met_pt[eventidx] * math.sin(met_phi[eventidx])
 
     tt_mass_final = 0
     btag_counter = 0
@@ -216,7 +217,7 @@ for eventidx in range(len(elec_pt)):
                 gentop4vector.SetPtEtaPhiM(genpart_pt[eventidx][k], genpart_eta[eventidx][k], genpart_phi[eventidx][k], genpart_mass[eventidx][k])
             if genpart_pid[eventidx][k] == -6 and genpart_status[eventidx][k] == 62:
                 genatop4vector = ROOT.TLorentzVector()
-                genatop4vector.SetPtEtaPhiM(genpart_pt[eventidx][k], genpart_eta[eventidx][k], genpart_phi[eventidx][k], [eventidx][k])
+                genatop4vector.SetPtEtaPhiM(genpart_pt[eventidx][k], genpart_eta[eventidx][k], genpart_phi[eventidx][k], genpart_mass[eventidx][k])
 
         com4vector = genatop4vector + gentop4vector
         tt_mass.append(tt_mass_final)
@@ -272,4 +273,160 @@ for eventidx in range(len(elec_pt)):
         final_array[eventidx] = 1
 
 
+tree = ROOT.TTree("TopReco", "TopReco")
 
+tt_mass_arr = array('f', [0.])
+top_pt_arr = array('f', [0.])
+top_eta_arr = array('f', [0.])
+top_phi_arr = array('f', [0.])
+top_rap_arr = array('f', [0.])
+
+atop_pt_arr = array('f', [0.])
+atop_eta_arr = array('f', [0.])
+atop_phi_arr = array('f', [0.])
+atop_rap_arr = array('f', [0.])
+
+nu_pt_arr = array('f', [0.])
+nu_eta_arr = array('f', [0.])
+nu_phi_arr = array('f', [0.])
+
+anu_pt_arr = array('f', [0.])
+anu_eta_arr = array('f', [0.])
+anu_phi_arr = array('f', [0.])
+
+lep_pt_arr = array('f', [0.])
+lep_eta_arr = array('f', [0.])
+lep_phi_arr = array('f', [0.])
+lep_mass_arr = array('f', [0.])
+
+alep_pt_arr = array('f', [0.])
+alep_eta_arr = array('f', [0.])
+alep_phi_arr = array('f', [0.])
+alep_mass_arr = array('f', [0.])
+
+b_pt_arr = array('f', [0.])
+b_phi_arr = array('f', [0.])
+b_eta_arr = array('f', [0.])
+b_mass_arr = array('f', [0.])
+
+ab_pt_arr = array('f', [0.])
+ab_eta_arr = array('f', [0.])
+ab_phi_arr = array('f', [0.])
+ab_mass_arr = array('f', [0.])
+
+gen_tt_mass_arr = array('f', [0.])
+gen_top_pt_arr = array('f', [0.])
+gen_top_eta_arr = array('f', [0.])
+gen_top_phi_arr = array('f', [0.])
+gen_top_rap_arr = array('f', [0.])
+
+gen_atop_pt_arr = array('f', [0.])
+gen_atop_eta_arr = array('f', [0.])
+gen_atop_phi_arr = array('f', [0.])
+gen_atop_rap_arr = array('f', [0.])
+
+tree.Branch("top_pt", top_pt_arr, "top_pt/F")
+tree.Branch("tt_mass", tt_mass_arr, "tt_mass/F")
+tree.Branch("top_eta", top_eta_arr, "top_eta/F")
+tree.Branch("top_phi", top_phi_arr, "top_phi/F")
+tree.Branch("top_rap", top_rap_arr, "top_rap/F")
+
+tree.Branch("atop_pt", atop_pt_arr, "atop_pt/F")
+tree.Branch("atop_eta", atop_eta_arr, "atop_eta/F")
+tree.Branch("atop_phi", atop_phi_arr, "atop_phi/F")
+tree.Branch("atop_rap", atop_rap_arr, "atop_rap/F")
+
+tree.Branch("nu_pt", nu_pt_arr, "nu_pt/F")
+tree.Branch("nu_eta", nu_eta_arr, "nu_eta/F")
+tree.Branch("nu_phi", nu_phi_arr, "nu_phi/F")
+
+tree.Branch("anu_phi", anu_phi_arr, "anu_phi/F")
+tree.Branch("anu_pt", anu_pt_arr, "anu_pt/F")
+tree.Branch("anu_eta", anu_eta_arr, "anu_eta/F")
+
+tree.Branch("lep_eta", lep_eta_arr, "lep_eta/F")
+tree.Branch("lep_pt", lep_pt_arr, "lep_pt/F")
+tree.Branch("lep_phi", lep_phi_arr, "lep_phi/F")
+tree.Branch("lep_mass", lep_mass_arr, "lep_mass/F")
+
+tree.Branch("alep_mass", alep_mass_arr, "alep_mass/F")
+tree.Branch("alep_pt", alep_pt_arr, "alep_pt/F")
+tree.Branch("alep_eta", alep_eta_arr, "alep_eta/F")
+tree.Branch("alep_phi", alep_phi_arr, "alep_phi/F")
+
+tree.Branch("b_pt", b_pt_arr, "b_pt/F")
+tree.Branch("b_eta", b_eta_arr, "b_eta/F")
+tree.Branch("b_phi", b_phi_arr, "b_phi/F")
+tree.Branch("b_mass", b_mass_arr, "b_mass/F")
+
+tree.Branch("ab_pt", ab_pt_arr, "ab_pt/F")
+tree.Branch("ab_eta", ab_eta_arr, "ab_eta/F")
+tree.Branch("ab_phi", ab_phi_arr, "ab_phi/F")
+tree.Branch("ab_mass", ab_mass_arr, "ab_mass/F")
+
+tree.Branch("gen_tt_mass", gen_tt_mass_arr, "gen_tt_mass/F")
+tree.Branch("gen_top_pt", gen_top_pt_arr, "gen_top_pt/F")
+tree.Branch("gen_top_eta", gen_top_eta_arr, "gen_top_eta/F")
+tree.Branch("gen_top_phi", gen_top_phi_arr, "gen_top_phi/F")
+tree.Branch("gen_top_rap", gen_top_rap_arr, "gen_top_rap/F")
+
+tree.Branch("gen_atop_pt", gen_atop_pt_arr, "gen_atop_pt/F")
+tree.Branch("gen_atop_eta", gen_atop_eta_arr, "gen_atop_eta/F")
+tree.Branch("gen_atop_phi", gen_atop_phi_arr, "gen_atop_phi/F")
+tree.Branch("gen_atop_rap", gen_atop_rap_arr, "gen_atop_rap/F")
+
+for i in range(len(top_pt)):
+    tt_mass_arr[0] = tt_mass[i]
+    top_pt_arr[0] = top_pt[i]
+    top_eta_arr[0] = top_eta[i]
+    top_phi_arr[0] = top_phi[i]
+    top_rap_arr[0] = top_rap[i]
+
+    atop_pt_arr[0] = atop_pt[i]
+    atop_eta_arr[0] = atop_eta[i]
+    atop_phi_arr[0] = atop_phi[i]
+    atop_rap_arr[0] = atop_rap[i]
+
+    nu_pt_arr[0] = nu_pt[i]
+    nu_eta_arr[0] = nu_eta[i]
+    nu_phi_arr[0] = nu_phi[i]
+
+    anu_pt_arr[0] = anu_pt[i]
+    anu_eta_arr[0] = anu_eta[i]
+    anu_phi_arr[0] = anu_phi[i]
+
+    lep_pt_arr[0] = lep_pt[i]
+    lep_eta_arr[0] = lep_eta[i]
+    lep_phi_arr[0] = lep_phi[i]
+    lep_mass_arr[0] = lep_mass[i]
+
+    alep_pt_arr[0] = lep_pt[i]
+    alep_eta_arr[0] = lep_eta[i]
+    alep_phi_arr[0] = lep_phi[i]
+    alep_mass_arr[0] = lep_mass[i]
+
+    b_pt_arr[0] = b_pt[i]
+    b_phi_arr[0] = b_phi[i]
+    b_eta_arr[0] = b_eta[i]
+    b_mass_arr[0] = b_mass[i]
+
+    ab_pt_arr[0] = ab_pt[i]
+    ab_eta_arr[0] = ab_eta[i]
+    ab_phi_arr[0] = ab_phi[i]
+    ab_mass_arr[0] = ab_mass[i]
+
+    gen_tt_mass_arr[0] = gen_tt_mass[i]
+    gen_top_pt_arr[0] = gen_top_pt[i]
+    gen_top_eta_arr[0] = gen_top_eta[i]
+    gen_top_phi_arr[0] = gen_top_phi[i]
+    gen_top_rap_arr[0] = gen_top_rap[i]
+
+    gen_atop_pt_arr[0] = gen_atop_pt[i]
+    gen_atop_eta_arr[0] = gen_atop_eta[i]
+    gen_atop_phi_arr[0] = gen_atop_phi[i]
+    gen_atop_rap_arr[0] = gen_atop_rap[i]
+
+    tree.Fill()
+
+    outputfile.Write()
+    outputfile.Close()
