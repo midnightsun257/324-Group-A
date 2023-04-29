@@ -5,6 +5,7 @@ from array import array
 import matplotlib.pyplot as plt
 import argparse
 import math
+from Top_reco_helpers import try_smear
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-i', '--input', help='Input')
@@ -136,15 +137,15 @@ for eventidx in range(len(elec_pt)):
         for j in range(len(jet_pt[eventidx])):
             if i >= j:
                 continue
-            if jet_pt[i] < 30:
+            if jet_pt[eventidx][i] < 30:
                 continue
-            if jet_pt[j] < 30:
+            if jet_pt[eventidx][j] < 30:
                 continue
-            if abs(jet_eta[i]) > 2.4:
+            if abs(jet_eta[eventidx][i]) > 2.4:
                 continue
-            if abs(jet_eta[j]) > 2.4:
+            if abs(jet_eta[eventidx][j]) > 2.4:
                 continue
-            if jet_btag[i] == 0 and jet_btag[j] == 0:
+            if jet_btag[eventidx][i] == 0 and jet_btag[eventidx][j] == 0:
                 continue
 
             jet14vector = ROOT.TLorentzVector()
@@ -156,7 +157,7 @@ for eventidx in range(len(elec_pt)):
                                      jet_phi[eventidx][j],
                                      jet_mass[eventidx][j])
 
-            if jet_btag[i] != 0 and jet_btag[j] != 0:
+            if jet_btag[eventidx][i] != 0 and jet_btag[eventidx][j] != 0:
                 tt_mass1, topp41, atopp41, nup41, anup41, sw1 = try_smear(jet14vector, jet24vector, alep4vector, lep4vector, metx, mety, eventidx)
                 tt_mass2, topp42, atopp42, nup42, anup42, sw2 = try_smear(jet24vector, jet14vector, alep4vector, lep4vector, metx, mety, eventidx)
 
@@ -430,3 +431,17 @@ for i in range(len(top_pt)):
 
     outputfile.Write()
     outputfile.Close()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
