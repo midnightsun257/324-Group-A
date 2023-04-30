@@ -2,7 +2,7 @@ import math
 import ROOT
 import uproot
 import numpy as np
-from   Nu_solutions import doubleNeutrinoSolutions 
+from   nuSolutions import doubleNeutrinoSolutions 
 
 dataFile      = ROOT.TFile("KinReco_input.root","OPEN")
 
