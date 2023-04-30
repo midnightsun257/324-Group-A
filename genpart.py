@@ -13,13 +13,13 @@ parser.add_argument('-o', '--output', help='Output')
 args = parser.parse_args()
 
 fileptr = uproot.open(args.input)
-genpart_pt = fileptr['CutTree']['genpart_pt'].array()
-genpart_eta = fileptr['CutTree']['genpart_eta'].array()
-genpart_phi = fileptr['CutTree']['genpart_phi'].array()
-genpart_mass = fileptr['CutTree']['genpart_mass'].array()
-genpart_pid = fileptr['CutTree']['genpart_pid'].array()
-genpart_status = fileptr['CutTree']['genpart_status'].array()
-genpart_charge = fileptr['CutTree']['genpart_charge'].array()
+genpart_pt = fileptr['CutTree']['selected_genpart_pt'].array()
+genpart_eta = fileptr['CutTree']['selected_genpart_eta'].array()
+genpart_phi = fileptr['CutTree']['selected_genpart_phi'].array()
+genpart_mass = fileptr['CutTree']['selected_genpart_mass'].array()
+genpart_pid = fileptr['CutTree']['selected_genpart_pid'].array()
+genpart_status = fileptr['CutTree']['selected_genpart_status'].array()
+genpart_charge = fileptr['CutTree']['selected_genpart_charge'].array()
 
 gen_lep_pt=[]
 gen_lep_eta=[]
@@ -122,7 +122,7 @@ tree.Branch("gen_atop_phi", gen_atop_phi_arr, "gen_atop_phi/F")
 tree.Branch("gen_atop_mass", gen_atop_mass_arr, "gen_atop_mass/F")
 
 # tree fill
-for i in range(len(genpart_pt)):
+for i in range(len(gen_top_pt)):
     gen_top_pt_arr[0] = gen_top_pt[i]
     gen_top_phi_arr[0] = gen_top_phi[i]
     gen_top_eta_arr[0] = gen_top_eta[i]
