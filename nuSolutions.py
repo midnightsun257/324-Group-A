@@ -8,8 +8,8 @@ try: from scipy.optimize import leastsq
 except: leastsq = None
 
 
-mT = 172.69   # GeV : top quark mass
-mW = 80.377  # GeV : W boson mass
+mT = 172.5   # GeV : top quark mass
+mW = 80.385  # GeV : W boson mass
 mN = 0       # GeV : neutrino mass
 
 
