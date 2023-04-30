@@ -55,31 +55,30 @@ for i in range(len(genpart_pt)):
         if (genpart_pid[i][j]==-11 or genpart_pid[i][j]==-13 or genpart_pid[i][j]==-15) and (genpart_pid[i][j+1]==12 or genpart_pid[i][j+1]==14 or genpart_pid[i][j+1]==16) and tempnum_alep==0:
             alep_idx=j
             tempnum_alep+=1
-        if tempnum_lep==1 and tempnum_alep==1:
-            break
+        #if tempnum_lep==1 and tempnum_alep==1:
+         #   break
 
     if (tempnum_alep ==0 or tempnum_lep==0) and (lep_idx==0 or alep_idx==0):
         continue
-    else:
-        gen_lep_pt.append(genpart_pt[i][lep_idx])
-        gen_lep_eta.append(genpart_eta[i][lep_idx])
-        gen_lep_phi.append(genpart_phi[i][lep_idx])
-        gen_lep_mass.append(genpart_mass[i][lep_idx])
 
-        gen_alep_pt.append(genpart_pt[i][alep_idx])
-        gen_alep_eta.append(genpart_eta[i][alep_idx])
-        gen_alep_phi.append(genpart_phi[i][alep_idx])
-        gen_alep_mass.append(genpart_mass[i][alep_idx])
+    gen_lep_pt.append(genpart_pt[i][lep_idx])
+    gen_lep_eta.append(genpart_eta[i][lep_idx])
+    gen_lep_phi.append(genpart_phi[i][lep_idx])
+    gen_lep_mass.append(genpart_mass[i][lep_idx])
+    gen_alep_pt.append(genpart_pt[i][alep_idx])
+    gen_alep_eta.append(genpart_eta[i][alep_idx])
+    gen_alep_phi.append(genpart_phi[i][alep_idx])
+    gen_alep_mass.append(genpart_mass[i][alep_idx])
 
-        gen_top_pt.append(genpart_pt[i][2])
-        gen_top_eta.append(genpart_eta[i][2])
-        gen_top_phi.append(genpart_phi[i][2])
-        gen_top_mass.append(genpart_mass[i][2])
+    gen_top_pt.append(genpart_pt[i][2])
+    gen_top_eta.append(genpart_eta[i][2])
+    gen_top_phi.append(genpart_phi[i][2])
+    gen_top_mass.append(genpart_mass[i][2])
 
-        gen_atop_pt.append(genpart_pt[i][3])
-        gen_atop_eta.append(genpart_eta[i][3])
-        gen_atop_phi.append(genpart_phi[i][3])
-        gen_atop_mass.append(genpart_mass[i][3])
+    gen_atop_pt.append(genpart_pt[i][3])
+    gen_atop_eta.append(genpart_eta[i][3])
+    gen_atop_phi.append(genpart_phi[i][3])
+    gen_atop_mass.append(genpart_mass[i][3])
 
 
 gen_lep_pt_arr = array('f', [0.])
