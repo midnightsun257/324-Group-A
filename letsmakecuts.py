@@ -343,11 +343,13 @@ elec_pt_arr = array('f', [0.])
 elec_eta_arr = array('f', [0.])
 elec_phi_arr = array('f', [0.])
 elec_charge_arr = array('f', [0.])
+elec_mass_arr = arrary('f', [0.])
 
 mu_pt_arr = array('f', [0.])
 mu_eta_arr = array('f', [0.])
 mu_phi_arr = array('f', [0.])
 mu_charge_arr = array('f', [0.])
+mu_mass_arr = arrary('f', [0.])
 
 ljet_pt_arr = array('f', [0.])
 ljet_eta_arr = array('f', [0.])
@@ -416,11 +418,13 @@ tree.Branch("selected_elec_pt", elec_pt_arr, "selected_elec_pt/F")
 tree.Branch("selected_elec_eta", elec_eta_arr, "selected_elec_eta/F")
 tree.Branch("selected_elec_phi", elec_phi_arr, "selected_elec_phi/F")
 tree.Branch("selected_elec_charge", elec_charge_arr, "selected_elec_charge/F")
+tree.Branch('selected_elec_mass', elec_mass_arr, 'selected_elec_mass/F')
 
 tree.Branch("selected_mu_pt", mu_pt_arr, "selected_mu_pt/F")
 tree.Branch("selected_mu_eta", mu_eta_arr, "selected_mu_eta/F")
 tree.Branch("selected_mu_phi", mu_phi_arr, "selected_mu_phi/F")
 tree.Branch("selected_mu_charge", mu_charge_arr, "selected_mu_charge/F")
+tree.Branch('selected_mu_mass', mu_mass_arr, 'selected_mu_mass/F')
 
 tree.Branch("selected_ljet_pt", ljet_pt_arr, "selected_ljet_pt/F")
 tree.Branch("selected_ljet_eta", ljet_eta_arr, "selected_ljet_eta/F")
@@ -478,11 +482,13 @@ for i in range(len(e_pt)):
     elec_phi_arr[0] = e_phi[i]
     elec_eta_arr[0] = e_eta[i]
     elec_charge_arr[0] = e_charge[i]
+    elec_mass_arr[0] = e_mass[i]
 
     mu_pt_arr[0] = mu_pt[i]
     mu_phi_arr[0] = mu_phi[i]
     mu_eta_arr[0] = mu_eta[i]
     mu_charge_arr[0] = mu_charge[i]
+    mu_mass_arr[0] = mu_mass[i]
 
     ljet_pt_arr[0] = ljet_pt[i]
     ljet_phi_arr[0] = ljet_phi[i]
